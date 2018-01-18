@@ -1,0 +1,59 @@
+<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+<div class="example-header mdc-toolbar-fixed-adjust">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="Bill_Number">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Bill Number </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Bill_Number}} </mat-cell>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="Date_of_Delivery">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Date_of_Delivery </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Date_of_Delivery}}</mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="Type_of_delivery">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Type_of_delivery </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Type_of_delivery}} </mat-cell>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="Delivery_Charges">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Delivery_Charges </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Delivery_Charges}} </mat-cell>
+      </ng-container>
+
+       <!-- Color Column -->
+       <ng-container matColumnDef="Expenses">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Expenses </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Expenses}} </mat-cell>
+        </ng-container>
+         <!-- Color Column -->
+      <ng-container matColumnDef="Action_Date">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Action_Date </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Action_Date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Comments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Comments </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Comments}} </mat-cell>
+          </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
