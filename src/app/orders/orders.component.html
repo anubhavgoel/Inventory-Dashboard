@@ -1,0 +1,66 @@
+<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+<div class="example-header mdc-toolbar-fixed-adjust">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="Bill_Number">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Bill Number </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Bill_Number}} </mat-cell>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="Customer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Customer}}</mat-cell>
+      </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="Booking_Status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Booking_Status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Booking_Status}} </mat-cell>
+    </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Rent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Rent </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Rent}} </mat-cell>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="Booking_Amount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Booking_Amount </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Booking_Amount}} </mat-cell>
+      </ng-container>
+
+       <!-- Color Column -->
+       <ng-container matColumnDef="Due_Rent">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Due_Rent </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Due_Rent}} </mat-cell>
+       </ng-container>
+
+        <ng-container matColumnDef="Start_Date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Start_Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Start_Date}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="End_Date">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> End_Date </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.End_Date}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Booking_Date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Booking_Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Booking_Date}} </mat-cell>
+              </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  </div>

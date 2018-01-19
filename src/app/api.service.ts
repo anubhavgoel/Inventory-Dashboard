@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 import{Product} from './product';
 const API_URL = environment.apiUrl;
 const Shipment_URL = environment.deliveryUrl;
+const orders_URL = environment.ordersUrl;
 
 @Injectable()
 export class ApiService {
@@ -31,6 +32,13 @@ export class ApiService {
   }
   public getAllShipments():any{
     var finalUrl = Shipment_URL; 
+    debugger;
+    return this.http.get(finalUrl);
+    
+   }
+
+   public getAllOrders():any{
+    var finalUrl = orders_URL; 
     debugger;
     return this.http.get(finalUrl);
     

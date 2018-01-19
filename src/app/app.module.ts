@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTableModule, MatPaginatorModule ,MatSortModule, MatFormFieldControl,MatInputModule,MatProgressSpinnerModule } from '@angular/material';
 import { DxDataGridModule } from 'devextreme-angular';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { OrdersComponent } from './orders/orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     LajpatComponent,
     DeliveryComponent,
     PatelComponent,
-    LaxmiComponent
+    LaxmiComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

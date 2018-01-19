@@ -5,6 +5,7 @@ import { LajpatComponent } from './lajpat/lajpat.component';
 import { LaxmiComponent } from './laxmi/laxmi.component';
 import { PatelComponent } from './patel/patel.component';
 import {DeliveryComponent} from './delivery/delivery.component';
+import{OrdersComponent} from './orders/orders.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'delivery',
     component: DeliveryComponent
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent
   }
 ];
 

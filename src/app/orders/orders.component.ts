@@ -2,26 +2,20 @@ import {Component, AfterViewInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatSort, MatTableDataSource,MatFormField,MatFormFieldControl} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
-import {merge} from 'rxjs/observable/merge';
-import {of as observableOf} from 'rxjs/observable/of';
-import {catchError} from 'rxjs/operators/catchError';
-import {map} from 'rxjs/operators/map';
-import {startWith} from 'rxjs/operators/startWith';
-import {switchMap} from 'rxjs/operators/switchMap';
 import { ApiService } from '../api.service';
 import { Data } from '@angular/router/src/config';
 import { environment } from '../../environments/environment';
 import { Http } from '@angular/http';
-import { leaveView } from '@angular/core/src/render3/instructions';
 const Shipment_URL = environment.deliveryUrl;
+
 @Component({
-  selector: 'app-delivery',
-  templateUrl: './delivery.component.html',
-  styleUrls: ['./delivery.component.scss'],
-  providers: [ ApiService ]
+  selector: 'app-orders',
+  templateUrl: './orders.component.html',
+  styleUrls: ['./orders.component.scss'],
+  providers: [ApiService]
 })
-export class DeliveryComponent implements AfterViewInit {
-  displayedColumns = ['Bill_Number', 'Date_of_Delivery', 'Type_of_delivery', 'Delivery_Charges','Expenses','Action_Date','Comments'];
+export class OrdersComponent implements AfterViewInit {
+  displayedColumns = ['Bill_Number', 'Customer', 'Booking_Status', 'Rent','Booking_Amount','Due_Rent','Start_Date','End_Date','Booking_Date'];
   dataSource= new MatTableDataSource();
   xyz :  any =[];
   isLoadingResults = true;
@@ -31,12 +25,12 @@ export class DeliveryComponent implements AfterViewInit {
 
   constructor(public Apiservice : ApiService) {
 
-    this.Apiservice.getAllShipments().subscribe((data) => {
+    this.Apiservice.getAllOrders().subscribe((data) => {
       debugger;
       this.xyz.push(JSON.parse(data._body));
-      this.formatChanger();
+      //this.formatChanger();
       //this.dataSource = this.xyz;
-      this.dataSource = new MatTableDataSource(this.xyz[0].Shipment);
+      this.dataSource = new MatTableDataSource(this.xyz[0].orders);
       this.isLoadingResults = false;
    });
    
@@ -78,4 +72,5 @@ export interface ShipmentData {
   Action_Date:string;
   Comments:string;
 }
+
 
