@@ -7,16 +7,24 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LajpatComponent } from './lajpat/lajpat.component';
 import { ApiService } from './api.service';
-
+import {ReactiveFormsModule} from '@angular/forms';
+import { environment } from '../environments/environment';
 import { HttpModule } from '@angular/http';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { PatelComponent } from './patel/patel.component';
 import { LaxmiComponent } from './laxmi/laxmi.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatTableModule, MatPaginatorModule ,MatSortModule, MatFormFieldControl,MatInputModule,MatProgressSpinnerModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule ,MatSortModule, MatFormFieldControl,MatInputModule,MatProgressSpinnerModule, MatStepperModule, MatButtonModule, MatAutocompleteModule, MatDatepickerModule, MatCardModule, MatGridListModule, MatTabsModule, MatListModule, MatSelectModule } from '@angular/material';
 import { DxDataGridModule } from 'devextreme-angular';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { OrdersComponent } from './orders/orders.component';
+import { CommonModule } from '@angular/common'; 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { ProductsComponent } from './products/products.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductAddComponent } from './product-add/product-add.component';
+import { PapaParseModule } from 'ngx-papaparse';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +33,10 @@ import { OrdersComponent } from './orders/orders.component';
     DeliveryComponent,
     PatelComponent,
     LaxmiComponent,
-    OrdersComponent
+    OrdersComponent,
+    ProductsComponent,
+    ProductDetailComponent,
+    ProductAddComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +52,21 @@ import { OrdersComponent } from './orders/orders.component';
     MatInputModule,
     DxDataGridModule,
     DxDataGridModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    CommonModule,
+    MatCardModule,
+    MatGridListModule,
+    MatTabsModule,
+    MatListModule,
+    MatSelectModule,
+    PapaParseModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

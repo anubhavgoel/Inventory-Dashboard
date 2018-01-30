@@ -1,15 +1,118 @@
-<div id="shrine-products" class="mdc-layout-grid mdc-toolbar-fixed-adjust">
-  <div class="mdc-layout-grid__cell"  *ngFor="let product of xyz.Products">
-  <div class="mdc-card shrine-product-card">
-  <section class="mdc-card__primary">
-          <h1 class="mdc-card__title mdc-card__title--large">{{product.Product_Name}}</h1>
-          <h2 class="mdc-card__subtitle">Product Code :{{product.Product_Code}}</h2>
-  </section>
-  <img class="shrine-product-card__image" width="400" height="600" alt="Sunglasses" src={{product.Image}}>
-  <section class="mdc-card__primary">
-<span class="mdc-card__title shrine-product-card__price">Rent : {{product.Rent}}</span>
-<span class="mdc-card__title shrine-product-card__price">Status : {{product.Status}}</span>
-</section>
-  </div>
-  </div>
+
+<div class="mdc-toolbar-fixed-adjust mat-elevation-z8">
+
+<mat-horizontal-stepper [linear]="isLinear">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Customer Details</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="model.name" name="name" formControlName="name" required>
+      </mat-form-field>
+      <div>
+      <mat-form-field>
+          <input matInput placeholder="Phone Number" [(ngModel)]="model.phone" name="phone" formControlName="phone" type="tel" required>
+      </mat-form-field>
+      </div>
+      <div>
+          <mat-form-field>
+              <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="2"
+                        matAutosizeMaxRows="5" [(ngModel)]="model.address" name="address" formControlName="address"></textarea>
+            </mat-form-field>
+     </div>
+     <div>
+        <mat-form-field>
+            <input matInput placeholder="Pincode" [(ngModel)]="model.pincode" name="pincode" formControlName="pincode" type="number">
+        </mat-form-field>
+        </div>
+      <div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+      <form class="example-form">
+          <ng-template matStepLabel>Product Details</ng-template>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Product" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+            <mat-autocomplete #auto="matAutocomplete" formControlName="secondCtrl" required>
+              <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+                <span>{{ state.name }}</span> |
+                <small>Population: {{state.population}}</small>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div>
+              <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+              <button mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
+        </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Dates</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Booking Date" [(ngModel)]="model.booking_date" name="booking_date" formControlName="booking_date" type="date" required>
+        </mat-form-field>
+        <div>
+        <mat-form-field>
+            <input matInput placeholder="Start Date" [(ngModel)]="model.Start_date" name="Start_date" formControlName="Start_date" type="date" required>
+        </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="End Date" [(ngModel)]="model.end_date" name="end_date" formControlName="end_date" type="date" required>
+            </mat-form-field>
+        </div>
+      <div>
+          <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="fourthFormGroup">
+  <form [formGroup]="fourthFormGroup">
+    <ng-template matStepLabel>Payments</ng-template>
+    <mat-form-field>
+        <input matInput placeholder="Booking Amount" [(ngModel)]="model.booking_amount" name="booking_amount" formControlName="booking_amount" type="number" required>
+      </mat-form-field>
+      <div>
+      <mat-form-field>
+          <input matInput placeholder="Security Paid" [(ngModel)]="model.security_paid" name="security_paid" formControlName="security_paid" type="number" required>
+      </mat-form-field>
+      </div>
+      <div>
+          <mat-form-field>
+              <input matInput placeholder="Delivery Charges" [(ngModel)]="model.Delivery_charges" name="Delivery_charges" formControlName="Delivery_charges"   type="number" required>
+          </mat-form-field>
+          </div>
+          <div>
+                <mat-form-field>
+                    <input matInput placeholder="Bill Number" [(ngModel)]="model.bill_number" name="bill_number" formControlName="bill_number" type="string" required>
+                </mat-form-field>
+                </div>   
+    <div>
+      <button mat-button matStepperPrevious (click)="add()">Back</button>
+    </div>
+</form>
+  </mat-step>
+</mat-horizontal-stepper>
 </div>
+
+<div class="example-container mat-elevation-z8">
+  
+        <mat-table [dataSource]="dataSource" matSort>
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>

@@ -30,6 +30,13 @@ export class ApiService {
    return this.http.get(finalUrl);
    
   }
+  public getProduct(product_code):any{
+    var finalUrl = API_URL + '&criteria=Product_Code=="'+ product_code +"\""; 
+    debugger;
+    return this.http.get(finalUrl);
+    
+   }
+
   public getAllShipments():any{
     var finalUrl = Shipment_URL; 
     debugger;

@@ -1,0 +1,73 @@
+<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+<button mat-mini-fab class="floating-action" color="primary">Primary</button>
+<div class="example-header mdc-toolbar-fixed-adjust">
+    
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="Product_Name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Product_Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Product_Name}} </mat-cell>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="Product_Code">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Product_Code </mat-header-cell>
+        <mat-cell *matCellDef="let row"><a routerLink="{{row.Product_Code}}"> {{row.Product_Code}}</a></mat-cell>
+      </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="Product_Category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Product_Category </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Product_Category}} </mat-cell>
+    </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Rent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Rent </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Rent}} </mat-cell>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="Color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.Color}} </mat-cell>
+      </ng-container>
+
+       <!-- Color Column -->
+       <ng-container matColumnDef="Image">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Image}} </mat-cell>
+       </ng-container>
+
+        <ng-container matColumnDef="Location">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Location}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <button mat-raised-button color="primary">Edit</button></mat-cell>
+          </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  </div>
+  
+  
+  
+  
+  <div class="grid-container">
+      <div class="grid-item"><mat-card routerLink="lajpat">Lajpat Nagar</mat-card></div>
+      <div class="grid-item"><mat-card>Patel Nagar</mat-card></div>
+      <div class="grid-item"><mat-card>Laxmi Nagar</mat-card></div>
+      <div class="grid-item"><mat-card>Jaipur</mat-card></div>
+    </div>
