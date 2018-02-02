@@ -1,0 +1,23 @@
+.example-container {
+    padding: 20px;
+  }
+
+  .example-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    grid-auto-rows: minmax(50px, auto);
+  }
+  .photo-container{
+border: 1px solid ;
+min-height: 400px;
+min-width: 300px;
+  }
+  .save-button{
+    width: 30%;
+    margin-left: 33%;
+    margin-bottom: 20px;
+  }
+  .mat-form-field {
+    padding: 10px;
+}

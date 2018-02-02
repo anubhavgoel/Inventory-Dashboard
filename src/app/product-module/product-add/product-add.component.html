@@ -1,0 +1,81 @@
+<div class=" mat-elevation-z8 mdc-toolbar-fixed-adjust">
+  <form class="example-form" [formGroup]="productForm">
+    <div class="example-container">
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Category" formControlName="category">
+            <mat-option *ngFor="let category of category" [value]="category.value">
+              {{ category.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Location" formControlName="location">
+            <mat-option *ngFor="let location of location" [value]="location.value">
+              {{ location.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Product Code" formControlName="product_code" type="text" required>
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="productCodeGenerator()">
+            <mat-icon>add_box</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Product Name" formControlName="product_name" type="text">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Manfacturing Code" formControlName="manfacturing_code">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Rent" formControlName="rent" type="number">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Procement Cost" formControlName="procurement_cost" type="number">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Date of Purchase" formControlName="dop" type="date">
+        </mat-form-field>
+
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Color" formControlName="color">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Vendor" formControlName="vendor">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Size" formControlName="size">
+            <mat-option *ngFor="let size of size" [value]="size.value">
+              {{ size.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Status" formControlName="status">
+            <mat-option *ngFor="let status of status" [value]="status.value">
+              {{ status.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <input id="csvfile" type="file" value="i">
+        <div class="photo-container">
+
+        </div>
+      </div>
+    </div>
+
+
+    <button mat-raised-button color="primary" class="save-button" (click)="save()">Save Product</button>
+  </form>
+
+
+</div>

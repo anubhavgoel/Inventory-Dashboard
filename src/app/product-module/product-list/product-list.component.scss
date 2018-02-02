@@ -1,0 +1,39 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 350px;
+  }
+  .mat-header-cell.mat-sort-header-sorted {
+    color: black;
+  }
+  .grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  grid-auto-rows: minmax(50px, auto);
+  margin-top: 50px;
+  }
+
+  .floating-action {
+    position: fixed;
+    right: 50px;
+    z-index: 998;
+    top: 30px;
+    width: 75px;
+    height: 75px;
+    }

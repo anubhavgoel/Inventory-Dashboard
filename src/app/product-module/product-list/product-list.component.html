@@ -1,0 +1,108 @@
+<button mat-mini-fab class="floating-action" color="primary" routerLink="add">+</button>
+<div class="example-header mdc-toolbar-fixed-adjust">
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="product_code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> product_code </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.product_code}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="product_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> product_name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.product_name}} </mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="manfacturing_code">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> manfacturing_code </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a> {{row.manfacturing_code}}</a>
+      </mat-cell>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> category </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.category}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="rent">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rent </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.rent}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="color">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.image}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> location </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.location}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="procurement_cost">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> procurement_cost </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.procurement_cost}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dop">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Date of Purchase </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.dop}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="size">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Size </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.size}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="vendor">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.vendor}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-raised-button color="primary" [routerLink]="['/products/add']" [queryParams]="{ product_code: (row.product_code) }">Edit</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+</div>
+
+
+
+
+<div class="grid-container">
+  <div class="grid-item">
+    <mat-card>Lajpat Nagar</mat-card>
+  </div>
+  <div class="grid-item">
+    <mat-card>Patel Nagar</mat-card>
+  </div>
+  <div class="grid-item">
+    <mat-card>Laxmi Nagar</mat-card>
+  </div>
+  <div class="grid-item">
+    <mat-card>Jaipur</mat-card>
+  </div>
+</div>

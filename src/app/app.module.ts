@@ -25,6 +25,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { PapaParseModule } from 'ngx-papaparse';
+import { ProductModuleModule } from './product-module/product-module.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,7 @@ import { PapaParseModule } from 'ngx-papaparse';
     DxDataGridModule,
     MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     MatStepperModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -66,7 +67,8 @@ import { PapaParseModule } from 'ngx-papaparse';
     MatTabsModule,
     MatListModule,
     MatSelectModule,
-    PapaParseModule
+    PapaParseModule,
+    ProductModuleModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
