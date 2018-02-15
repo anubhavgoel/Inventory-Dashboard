@@ -1,0 +1,27 @@
+<div class="example-container mdc-toolbar-fixed-adjust">
+<div class="mat-elevation-z8">
+    <mat-tab-group (selectChange)="tabSelectionChanged($event)">
+        <mat-tab label="{{category.value}}" *ngFor="let category of category">
+          <div class="layout-3">
+              <mat-card class="example-card" *ngFor="let product of productList">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{product?.product_name}}</mat-card-title>
+                    <mat-card-subtitle>Product Code :{{product?.product_code}}</mat-card-subtitle>
+                  </mat-card-header>
+                  <img mat-card-image src={{product?.imageUrl}}>
+                  <mat-card-content>
+                    <p>
+                        Rent : {{product?.rent}}
+                    </p>
+                    <p>Status : {{product?.status}}</p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button mat-button [routerLink]="[product?.product_code]">Details</button>
+                    <button mat-button>Book</button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+        </mat-tab>
+      </mat-tab-group>
+</div></div>

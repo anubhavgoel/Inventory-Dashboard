@@ -1,0 +1,169 @@
+<div class="mdc-toolbar-fixed-adjust mat-elevation-z8">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="isOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Booking Form
+        </mat-panel-title>
+        <mat-panel-description>
+          Booking details
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button mat-raised-button (click)="isLinear = true" id="toggle-linear">Enable linear mode</button>
+
+      <mat-horizontal-stepper [linear]="isLinear">
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Fill out customer details</ng-template>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Phone" [matAutocomplete]="auto1" formControlName="phone">
+                  <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="customerSelection($event)">
+                    <mat-option *ngFor="let cust of filteredCustomerOptions | async" [value]="cust.phone">
+                        <span>{{ cust.phone }}</span> |
+                        <small>Name: {{cust.name}}</small>
+                    </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Name" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+
+              <textarea matInput placeholder="Autosize textarea" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" placeholder="Address"
+                formControlName="address"></textarea>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Pincode" formControlName="pincode" type="number">
+            </mat-form-field>
+            <div>
+                <button mat-button (click)="customerAdd()">Add</button>
+              <button mat-button matStepperNext >Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Fill out the dates</ng-template>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Order Number" formControlName="orderNumber">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" placeholder="Order Date" formControlName="orderDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker2" placeholder="Start Date" formControlName="startDate"> 
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="example-full-width"> 
+                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker3" placeholder="End Date" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Product Details</ng-template>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Product" aria-label="State" [matAutocomplete]="auto" formControlName="product">
+              
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="productSelection($event)">
+                  <mat-option *ngFor="let option of filteredProductOptions | async" [value]="option.product_code">
+                    <!-- <img style="vertical-align:middle;" aria-hidden src="{{option.imageUrl}}" height="25" /> -->
+                    <span>{{ option.product_code }}</span> |
+                    <small>Name: {{option.product_name}}</small>
+                  </mat-option>
+                
+              </mat-autocomplete>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>{{selectedProduct?.product_name}}</mat-card-title>
+              <mat-card-subtitle>{{selectedProduct?.product_code}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{selectedProduct?.imageUrl}}" alt="{{selectedProduct?.product_name}}">
+            <mat-card-content>
+              <p>
+                {{selectedProduct?.rent}}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </mat-step>
+        <mat-step [stepControl]="fourthFormGroup">
+          <form [formGroup]="fourthFormGroup">
+            <ng-template matStepLabel>Money Details</ng-template>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Advance Amount" formControlName="advanceAmount" type="number" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Advance Security" formControlName="advanceSecurity" type="number" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Delivery" formControlName="delivery" type="number" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Discount" formControlName="discount" type="number" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Confirm Details</ng-template>
+            <mat-list role="list">
+                <mat-list-item role="listitem">Name :{{firstFormGroup.get('name').value}}</mat-list-item>
+                <mat-list-item role="listitem">Phone:{{firstFormGroup.get('phone').value}}</mat-list-item>
+                <mat-list-item role="listitem">Address:{{firstFormGroup.get('address').value}}</mat-list-item>
+                <mat-list-item role="listitem">Pincode: {{firstFormGroup.get('pincode').value}}</mat-list-item>
+                <mat-list-item role="listitem">Order Number: {{secondFormGroup.get('orderNumber').value}}</mat-list-item>
+                <mat-list-item role="listitem">Order Date: {{secondFormGroup.get('orderDate').value}}</mat-list-item>
+                <mat-list-item role="listitem">Start Date: {{secondFormGroup.get('startDate').value}}</mat-list-item>
+                <mat-list-item role="listitem">End date: {{secondFormGroup.get('endDate').value}}</mat-list-item>
+                <mat-list-item role="listitem">Product: {{thirdFormGroup.get('product').value}}</mat-list-item>
+                <mat-list-item role="listitem">Advance Amount: {{fourthFormGroup.get('advanceAmount').value}}</mat-list-item>
+                <mat-list-item role="listitem">Advance Security: {{fourthFormGroup.get('advanceSecurity').value}}</mat-list-item>
+                <mat-list-item role="listitem">Delivery: {{fourthFormGroup.get('delivery').value}}</mat-list-item>
+                <mat-list-item role="listitem">Discount: {{fourthFormGroup.get('discount').value}}</mat-list-item>
+              </mat-list>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="saveOrder()">Confirm</button>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Delivery Form
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Return Form
+        </mat-panel-title>
+        <mat-panel-description>
+          Return Details
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

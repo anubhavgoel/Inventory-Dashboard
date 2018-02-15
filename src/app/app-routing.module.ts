@@ -27,10 +27,6 @@ const routes: Routes = [
   {
     path: 'delivery',
     component: DeliveryComponent
-  },
-  {
-    path: 'orders',
-    component: OrdersComponent
   }
 ];
 

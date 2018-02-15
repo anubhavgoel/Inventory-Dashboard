@@ -66,9 +66,18 @@
         </mat-form-field>
       </div>
       <div>
-        <input id="csvfile" type="file" value="i">
-        <div class="photo-container">
+          <h3>Single File Upload</h3>
 
+          <label>
+            <input type="file" class="button" (change)="detectFiles($event)">
+          </label>
+          <button class="button is-primary"
+            [disabled]="!selectedFiles"
+            (click)="uploadSingle()">
+            Upload Single
+          </button>
+        <div class="photo-container">
+            <img [src]="image" alt="Smiley face" width="400px" >
         </div>
       </div>
     </div>

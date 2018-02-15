@@ -1,0 +1,59 @@
+<button mat-mini-fab class="floating-action" color="primary" routerLink="add">+</button>
+<div class="example-header mdc-toolbar-fixed-adjust">
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+ 
+<mat-table [dataSource]="dataSource" matSort>
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="orderNumber">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> orderNumber </mat-header-cell>
+    <mat-cell *matCellDef="let row"><a>{{row.orderNumber}}</a>  </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="product">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> product </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.product}} </mat-cell>
+  </ng-container>
+
+  <!-- Progress Column -->
+  <ng-container matColumnDef="startDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> startDate </mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.startDate}}</mat-cell>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="endDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> endDate </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.endDate}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> name </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Color Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> status </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-raised-button color="primary" [routerLink]="['/products/add']" [queryParams]="{ product_code: (row.product_code) }">Edit</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;">
+  </mat-row>
+</mat-table>
+</div>

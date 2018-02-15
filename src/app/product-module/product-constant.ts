@@ -11,7 +11,15 @@ export const ProductConstant ={
         {value: 'IW', viewValue: 'Indo Western'},
         {value:'LEH',viewValue:'Lehenga'},
         {value:'ANK',viewValue:'Anarkali'},
-        {value:'GOW',viewValue:'Gown'}
+        {value:'GOW',viewValue:'Gown'},
+        {value:'LOW',viewValue:'Lower'},
+        {value:'STOL',viewValue:'Stole'},
+        {value:'DRE',viewValue:'Dress'},
+        {value:'JK',viewValue:'Jacket'},
+        {value:'PG',viewValue:'Padgi'},
+        {value:'MALA',viewValue:'Mala'},
+
+        
     ],
       Status :[
           {value:'Available', viewValue:'Available'},

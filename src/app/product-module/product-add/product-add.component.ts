@@ -4,11 +4,14 @@ import { ProductConstant } from '../product-constant';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
 import { firestore } from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators'
 import { locateHostElement } from '@angular/core/src/render3/instructions';
+import { UploadService } from '../upload-service';
+import { Upload } from '../upload';
 @Component({
   selector: 'app-product-add',
   templateUrl: './product-add.component.html',
@@ -25,8 +28,11 @@ export class ProductAddComponent implements OnInit {
   abc: any;
   rowData: any;
   private sub: Subscription;
-
-  constructor(private db: AngularFirestore, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  selectedFiles: FileList | null;
+  currentUpload: Upload;
+  finalUpload:Upload;
+  image:any;
+  constructor(private db: AngularFirestore, private fb: FormBuilder, private route: ActivatedRoute, private router: Router,private upSvc: UploadService) {
     this.prodcollection = db.collection('products');
 
   }
@@ -45,7 +51,9 @@ export class ProductAddComponent implements OnInit {
       size: '',
       color: '',
       vendor: '',
-      status: 'Available'
+      status: 'Available',
+      image:'',
+      imageUrl:''
 
     });
     debugger;
@@ -58,6 +66,8 @@ export class ProductAddComponent implements OnInit {
 
       }
     );
+    //const storageRef = firebase.storage().ref('uploads/4.png');
+    
   }
   productCodeGenerator() {
     debugger;
@@ -101,7 +111,6 @@ export class ProductAddComponent implements OnInit {
   }
   save() {
     debugger;
-    this.productForm.controls;
     this.prodcollection.doc(this.productForm.get('product_code').value).set({
       product_code: this.productForm.get('product_code').value,
       product_name: this.productForm.get('product_name').value,
@@ -114,7 +123,9 @@ export class ProductAddComponent implements OnInit {
       size: this.productForm.get('size').value,
       color: this.productForm.get('color').value,
       vendor: this.productForm.get('vendor').value,
-      status: this.productForm.get('status').value
+      status: this.productForm.get('status').value,
+      image:this.productForm.get('image').value,
+      imageUrl:this.productForm.get('imageUrl').value
     });
     this.productForm.reset();
     this.router.navigate(['/products']);
@@ -141,4 +152,20 @@ export class ProductAddComponent implements OnInit {
     });
 
   }
+  detectFiles($event: Event) {
+    debugger;
+    this.selectedFiles = ($event.target as HTMLInputElement).files;
+}
+
+uploadSingle() {
+  debugger;
+  const file = this.selectedFiles;
+  if (file && file.length === 1) {
+    this.currentUpload = new Upload(file.item(0));
+    this.image= this.currentUpload.file.name;
+    this.finalUpload = this.upSvc.pushUpload(this.currentUpload,this.productForm);
+  } else {
+    console.error('No file found!');
+  }
+}
 }

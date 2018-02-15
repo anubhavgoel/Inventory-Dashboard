@@ -121,7 +121,7 @@ export class HomeComponent {
     })
       .catch((err) => {
       console.log(err);
-    })
+    });
   }
 }
 export class Hero {

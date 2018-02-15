@@ -1,0 +1,32 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 350px;
+  }
+  .mat-header-cell.mat-sort-header-sorted {
+    color: black;
+  }
+
+  .floating-action {
+    position: fixed;
+    right: 50px;
+    z-index: 998;
+    top: 30px;
+    width: 75px;
+    height: 75px;
+    }
