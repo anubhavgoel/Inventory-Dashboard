@@ -17,12 +17,28 @@
     <mat-cell *matCellDef="let row"><a>{{row.orderNumber}}</a>  </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> status </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="product">
     <mat-header-cell *matHeaderCellDef mat-sort-header> product </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.product}} </mat-cell>
   </ng-container>
 
-  <!-- Progress Column -->
+  <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> phone </mat-header-cell>
+    <mat-cell *matCellDef="let row" (click)="customerDetails()"> {{row.phone}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="grandTotal">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> grandTotal </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.grandTotal}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="orderDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> orderDate </mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.orderDate}}</mat-cell>
+  </ng-container>
   <ng-container matColumnDef="startDate">
     <mat-header-cell *matHeaderCellDef mat-sort-header> startDate </mat-header-cell>
     <mat-cell *matCellDef="let row">{{row.startDate}}</mat-cell>
@@ -34,21 +50,17 @@
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> name </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-  </ng-container>
+  
 
   <!-- Color Column -->
-  <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> status </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
-  </ng-container>
+
 
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <button mat-raised-button color="primary" [routerLink]="['/products/add']" [queryParams]="{ product_code: (row.product_code) }">Edit</button>
+      <button *ngIf="row.status=='Booked'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'delivery'}">Deliver</button>
+      <button *ngIf="row.status=='Delivered'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'return'}">Return</button>
+
     </mat-cell>
   </ng-container>
 

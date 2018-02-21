@@ -27,6 +27,7 @@ import { ProductAddComponent } from './product-add/product-add.component';
 import { PapaParseModule } from 'ngx-papaparse';
 import { ProductModuleModule } from './product-module/product-module.module';
 import { OrderModuleModule } from './order-module/order-module.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { OrderModuleModule } from './order-module/order-module.module';
     OrdersComponent,
     ProductsComponent,
     ProductDetailComponent,
-    ProductAddComponent
+    ProductAddComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { OrderAddComponent } from './order-add/order-add.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { MatExpansionModule, MatFormFieldModule, MatStepperModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatListModule, MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule } from '@angular/material';
+import { MatExpansionModule, MatFormFieldModule, MatStepperModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatListModule, MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule, MatSelectModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 import{ordersRouting} from './order-routing.module'
 import { ReactiveFormsModule } from '@angular/forms';
-
+import{MatMomentDateModule} from '@angular/material-moment-adapter';
+import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,9 +22,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatIconModule,
+    TextMaskModule,
+    MatProgressSpinnerModule
     
   ],
   declarations: [OrderAddComponent, OrderListComponent, OrderDetailComponent]

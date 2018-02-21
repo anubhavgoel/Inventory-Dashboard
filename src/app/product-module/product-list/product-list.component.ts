@@ -91,7 +91,7 @@ photo(){
  console.log(this.finalData);
 }
 
-upload(anubhav){
+upload(){
 var myfile = $("#csvfile")[0].files[0];
 this.parseData(myfile,this);
 

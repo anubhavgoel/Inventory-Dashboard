@@ -7,7 +7,12 @@ import { PatelComponent } from './patel/patel.component';
 import {DeliveryComponent} from './delivery/delivery.component';
 import{OrdersComponent} from './orders/orders.component';
 import{ProductsComponent} from './products/products.component';
+import{DashboardComponent} from './dashboard/dashboard.component';
 const routes: Routes = [
+  {
+    path: '',
+    component: DashboardComponent
+  },
   {
     path: 'home',
     component: HomeComponent

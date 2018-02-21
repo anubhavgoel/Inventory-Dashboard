@@ -1,6 +1,6 @@
 <div class="mdc-toolbar-fixed-adjust mat-elevation-z8">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="isOpen">
+    <mat-expansion-panel [expanded]="isOpen" [disabled]="isDisabled">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Booking Form
@@ -13,17 +13,18 @@
 
       <mat-horizontal-stepper [linear]="isLinear">
         <mat-step [stepControl]="firstFormGroup">
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Fill out customer details</ng-template>
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Phone" [matAutocomplete]="auto1" formControlName="phone">
-                  <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="customerSelection($event)">
-                    <mat-option *ngFor="let cust of filteredCustomerOptions | async" [value]="cust.phone">
-                        <span>{{ cust.phone }}</span> |
-                        <small>Name: {{cust.name}}</small>
-                    </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+              <input matInput placeholder="Phone" [matAutocomplete]="auto1" formControlName="phone">
+              <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="customerSelection($event)">
+                <mat-option *ngFor="let cust of filteredCustomerOptions | async" [value]="cust.phone">
+                  <span>{{ cust.phone }}</span> |
+                  <small>Name: {{cust.name}}</small>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Name" formControlName="name" required>
             </mat-form-field>
@@ -36,8 +37,8 @@
               <input matInput placeholder="Pincode" formControlName="pincode" type="number">
             </mat-form-field>
             <div>
-                <button mat-button (click)="customerAdd()">Add</button>
-              <button mat-button matStepperNext >Next</button>
+              <button mat-button (click)="customerAdd()">Add</button>
+              <button mat-button matStepperNext>Next</button>
             </div>
           </form>
         </mat-step>
@@ -45,22 +46,22 @@
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Fill out the dates</ng-template>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Order Number" formControlName="orderNumber">
+              <input matInput placeholder="Order Number" formControlName="orderNumber" type="text">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" placeholder="Order Date" formControlName="orderDate">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+              <input matInput [matDatepicker]="picker1" placeholder="Order Date" formControlName="orderDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker1></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker2" placeholder="Start Date" formControlName="startDate"> 
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
+              <input matInput [min]="minDate" [matDatepicker]="picker2" placeholder="Start Date" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker2></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="example-full-width"> 
-                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker3" placeholder="End Date" formControlName="endDate">
-                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                <mat-datepicker #picker3></mat-datepicker>
+            <mat-form-field class="example-full-width">
+              <input matInput [min]="minDate" [matDatepicker]="picker3" placeholder="End Date" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker3></mat-datepicker>
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -73,16 +74,16 @@
             <ng-template matStepLabel>Product Details</ng-template>
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Product" aria-label="State" [matAutocomplete]="auto" formControlName="product">
-              
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="productSelection($event)">
-                  <mat-option *ngFor="let option of filteredProductOptions | async" [value]="option.product_code">
-                    <!-- <img style="vertical-align:middle;" aria-hidden src="{{option.imageUrl}}" height="25" /> -->
-                    <span>{{ option.product_code }}</span> |
-                    <small>Name: {{option.product_name}}</small>
-                  </mat-option>
-                
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="productSelection($event)">
+                <mat-option *ngFor="let option of filteredProductOptions | async" [value]="option.product_code">
+                  <!-- <img style="vertical-align:middle;" aria-hidden src="{{option.imageUrl}}" height="25" /> -->
+                  <span>{{ option.product_code }}</span> |
+                  <small>Name: {{option.product_name}}</small>
+                </mat-option>
+
               </mat-autocomplete>
             </mat-form-field>
+
             <div>
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext>Next</button>
@@ -105,16 +106,31 @@
           <form [formGroup]="fourthFormGroup">
             <ng-template matStepLabel>Money Details</ng-template>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Advance Amount" formControlName="advanceAmount" type="number" required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Advance Security" formControlName="advanceSecurity" type="number" required>
+              <input matInput placeholder="Sub Total Amount" formControlName="subTotalAmount" type="number" required>
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Delivery" formControlName="delivery" type="number" required>
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Discount" formControlName="discount" type="number" required>
+            </mat-form-field>
+            <mat-form-field class="example-half-width">
+              <input matInput placeholder="Grand Total" formControlName="grandTotal" type="number" required>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Advance Amount" formControlName="advanceAmount" type="number" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Advance Security" formControlName="advanceSecurity" type="number" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-half-width">
+              <mat-select placeholder="Mode" formControlName="mode">
+                <mat-option *ngFor="let mode of mode" [value]="mode.value">
+                  {{ mode.value }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
@@ -123,39 +139,99 @@
           </form>
         </mat-step>
         <mat-step>
-            <ng-template matStepLabel>Confirm Details</ng-template>
-            <mat-list role="list">
-                <mat-list-item role="listitem">Name :{{firstFormGroup.get('name').value}}</mat-list-item>
-                <mat-list-item role="listitem">Phone:{{firstFormGroup.get('phone').value}}</mat-list-item>
-                <mat-list-item role="listitem">Address:{{firstFormGroup.get('address').value}}</mat-list-item>
-                <mat-list-item role="listitem">Pincode: {{firstFormGroup.get('pincode').value}}</mat-list-item>
-                <mat-list-item role="listitem">Order Number: {{secondFormGroup.get('orderNumber').value}}</mat-list-item>
-                <mat-list-item role="listitem">Order Date: {{secondFormGroup.get('orderDate').value}}</mat-list-item>
-                <mat-list-item role="listitem">Start Date: {{secondFormGroup.get('startDate').value}}</mat-list-item>
-                <mat-list-item role="listitem">End date: {{secondFormGroup.get('endDate').value}}</mat-list-item>
-                <mat-list-item role="listitem">Product: {{thirdFormGroup.get('product').value}}</mat-list-item>
-                <mat-list-item role="listitem">Advance Amount: {{fourthFormGroup.get('advanceAmount').value}}</mat-list-item>
-                <mat-list-item role="listitem">Advance Security: {{fourthFormGroup.get('advanceSecurity').value}}</mat-list-item>
-                <mat-list-item role="listitem">Delivery: {{fourthFormGroup.get('delivery').value}}</mat-list-item>
-                <mat-list-item role="listitem">Discount: {{fourthFormGroup.get('discount').value}}</mat-list-item>
-              </mat-list>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="saveOrder()">Confirm</button>
+          <ng-template matStepLabel>Confirm Details</ng-template>
+          <mat-list role="list">
+            <mat-list-item role="listitem">Name :{{firstFormGroup.get('name').value}}</mat-list-item>
+            <mat-list-item role="listitem">Phone:{{firstFormGroup.get('phone').value}}</mat-list-item>
+            <mat-list-item role="listitem">Address:{{firstFormGroup.get('address').value}}</mat-list-item>
+            <mat-list-item role="listitem">Pincode: {{firstFormGroup.get('pincode').value}}</mat-list-item>
+            <mat-list-item role="listitem">Order Number: {{secondFormGroup.get('orderNumber').value}}</mat-list-item>
+            
+            <mat-list-item role="listitem">Product: {{thirdFormGroup.get('product').value}}</mat-list-item>
+            <mat-list-item role="listitem">sub Total Amount: {{fourthFormGroup.get('subTotalAmount').value}}</mat-list-item>
+            <mat-list-item role="listitem">Delivery: {{fourthFormGroup.get('delivery').value}}</mat-list-item>
+            <mat-list-item role="listitem">Discount: {{fourthFormGroup.get('discount').value}}</mat-list-item>
+            <mat-list-item role="listitem">Grand Total: {{fourthFormGroup.get('grandTotal').value}}</mat-list-item>
+            <mat-list-item role="listitem">Advance Amount: {{fourthFormGroup.get('advanceAmount').value}}</mat-list-item>
+            <mat-list-item role="listitem">Advance Security: {{fourthFormGroup.get('advanceSecurity').value}}</mat-list-item>
+            <mat-list-item role="listitem">Payment Mode: {{fourthFormGroup.get('mode').value}}</mat-list-item>
+          </mat-list>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="saveOrder()">Confirm</button>
         </mat-step>
       </mat-horizontal-stepper>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel [expanded]="isdeliveryOpen" [disabled]="isDeliveryDisabled">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Delivery Form
         </mat-panel-title>
         <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          Currently I am
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
+      <div class="return-container">
+          <mat-card class="order">
+            <mat-card-title>Order Details</mat-card-title>
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                Customer Name :{{orderData?.name}} | Customer Phone:{{orderData?.phone}} </mat-list-item>
+              <mat-list-item role="listitem">Product: {{orderData?.product}} </mat-list-item>
+              <mat-list-item role="listitem">Grand Total : {{orderData?.grandTotal}}</mat-list-item>
+            </mat-list>
+          </mat-card>
+          <mat-card class="booking">
+            <mat-card-title>Booking Details</mat-card-title>
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                Advance Paid: {{bookingData?.advanceAmount}}</mat-list-item>
+              <mat-list-item role="listitem">Advance Security: {{bookingData?.advanceSecurity}}</mat-list-item>
+              <mat-list-item role="listitem">Booking date:{{orderData?.orderDate}}</mat-list-item>
+            </mat-list>
+          </mat-card>
+          <mat-card class="delivery">
+            <mat-card-title>Delivery Details</mat-card-title>
+            <mat-list role="list">
+                <mat-list-item role="listitem">Delivery Date:{{orderData?.startDate}}</mat-list-item>
+                <mat-list-item role="listitem">Due Rent :{{bookingData?.dueRent}}</mat-list-item>
+                <mat-list-item role="listitem">Due Security:{{bookingData?.dueSecurity}}</mat-list-item>
+            </mat-list>
+          </mat-card>
+          <mat-card class="return">
+      <form [formGroup]="fifthFormGroup">
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="picker4" placeholder="Actual Delivery Date" formControlName="actualDeliveryDate">
+          <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #picker4></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+          <input matInput placeholder="Due Amount" formControlName="dueRent" type="number" required>
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+          <mat-select placeholder="Mode" formControlName="dueRentMode">
+            <mat-option *ngFor="let mode of mode" [value]="mode.value">
+              {{ mode.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+          <input matInput placeholder="Due Security" formControlName="dueSecurity" type="number" required>
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+          <mat-select placeholder="Mode" formControlName="dueSecurityMode">
+            <mat-option *ngFor="let mode of mode" [value]="mode.value">
+              {{ mode.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button (click)="saveDelivery(orderData.orderNumber)">Confirm</button>
+        </div>
+      </form>
+    </mat-card>
+      </div>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="isreturnOpen" [disabled]="isReturnDisabled">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Return Form
@@ -164,6 +240,91 @@
           Return Details
         </mat-panel-description>
       </mat-expansion-panel-header>
+      <div class="return-container">
+        <mat-card class="order">
+          <mat-card-title>Order Details</mat-card-title>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              Customer Name :{{orderData?.name}} | Customer Phone:{{orderData?.phone}} </mat-list-item>
+            <mat-list-item role="listitem">Product: {{orderData?.product}} </mat-list-item>
+            <mat-list-item role="listitem">Grand Total : {{orderData?.grandTotal}}</mat-list-item>
+          </mat-list>
+        </mat-card>
+        <mat-card class="booking">
+          <mat-card-title>Booking Details</mat-card-title>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              Advance Paid: {{bookingData?.advanceAmount}}</mat-list-item>
+            <mat-list-item role="listitem">Advance Security: {{bookingData?.advanceSecurity}}</mat-list-item>
+            <mat-list-item role="listitem">Booking date:{{orderData?.orderDate}}</mat-list-item>
+          </mat-list>
+        </mat-card>
+        <mat-card class="delivery">
+          <mat-card-title>Delivery Details</mat-card-title>
+          <!-- <mat-list role="list">
+            <mat-list-item role="listitem">
+              Delivery Date:{{deliveryData?.actualDeliveryDate}}</mat-list-item>
+            <mat-list-item role="listitem">Due Rent Paid :{{deliveryData?.dueRent}}</mat-list-item>
+            <mat-list-item role="listitem">Due Security Paid:{{deliveryData?.dueSecurity}}</mat-list-item>
+          </mat-list> -->
+        </mat-card>
+        <mat-card class="return">
+          <form [formGroup]="sixthFormGroup">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="securityWithWrapd" placeholder="Security with Wrapd" type="number">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput [matDatepicker]="picker5" placeholder="Actual Return Date" formControlName="actualReturnDate">
+              <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker5></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Return Type" formControlName="returnType">
+                <mat-option *ngFor="let mode of returnType" [value]="mode.value">
+                  {{ mode.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="rentReturn">
+              <mat-form-field class="example-half-width">
+                <mat-select placeholder="Rent Reduction Reason" formControlName="rentReturnReason">
+                  <mat-option *ngFor="let mode of rentReturnReason" [value]="mode.value">
+                    {{ mode.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-half-width">
+                <input matInput formControlName="rentReturnAmount" placeholder="Rent Refund Amount" type="number">
+              </mat-form-field>
+            </div>
+            <div *ngIf="securityDeduct">
+              <mat-form-field class="example-half-width">
+                <mat-select placeholder="Security Deduction Reason" formControlName="securityDeductionReason">
+                  <mat-option *ngFor="let mode of securityDeductionReason" [value]="mode.value">
+                    {{ mode.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-half-width">
+                <input matInput formControlName="securityDeductionAmount" placeholder="Security Deduction Amount" type="number">
+              </mat-form-field>
+            </div>
+            <mat-form-field class="example-half-width">
+              <mat-select placeholder="Security Return Mode" formControlName="securityReturnMode">
+                <mat-option *ngFor="let mode of mode" [value]="mode.value">
+                  {{ mode.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-half-width">
+              <input matInput formControlName="securityToRefund" placeholder="Security To Refund" type="number">
+            </mat-form-field>
+            <div>
+              <button mat-button (click)="saveReturn(orderData.orderNumber)">Confirm</button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
