@@ -9,7 +9,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "json-server": "json-server --watch db.json"
+    "json-server": "json-server --watch db.json",
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json",
+    "doc:build": "compodoc -p src/tsconfig.app.json",
+    "doc:serve": "compodoc -s",
+    "doc:buildandserve": "compodoc -p src/tsconfig.app.json -s"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +39,7 @@
     "json-server": "^0.12.1",
     "material-components-web": "^0.28.0",
     "moment": "^2.20.1",
+    "ngx-loading": "^1.0.14",
     "ngx-papaparse": "^2.0.4",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
@@ -56,8 +61,10 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
+    "source-map-explorer": "^1.5.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "~2.4.2"
+    "typescript": "~2.4.2",
+    "webpack-bundle-analyzer": "^2.10.0"
   }
 }

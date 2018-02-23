@@ -1,12 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';     // Add this
-import { LajpatComponent } from './lajpat/lajpat.component'; 
-import { LaxmiComponent } from './laxmi/laxmi.component';
-import { PatelComponent } from './patel/patel.component';
-import {DeliveryComponent} from './delivery/delivery.component';
-import{OrdersComponent} from './orders/orders.component';
-import{ProductsComponent} from './products/products.component';
 import{DashboardComponent} from './dashboard/dashboard.component';
 const routes: Routes = [
   {
@@ -14,25 +7,13 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
+    path: 'products',
+    loadChildren: 'app/product-module/product-module.module#ProductModuleModule',
   },
   {
-    path: 'products/lajpat',
-    component: LajpatComponent
+    path: 'orders',
+    loadChildren: 'app/order-module/order-module.module#OrderModuleModule',
   },
-  {
-    path: 'laxmi',
-    component: LaxmiComponent
-  },
-  {
-    path: 'patel',
-    component: PatelComponent
-  },
-  {
-    path: 'delivery',
-    component: DeliveryComponent
-  }
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import{ordersRouting} from './order-routing.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import{MatMomentDateModule} from '@angular/material-moment-adapter';
 import { TextMaskModule } from 'angular2-text-mask';
+import { LoadingModule } from 'ngx-loading';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatDialogModule,
     MatIconModule,
     TextMaskModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LoadingModule
     
   ],
   declarations: [OrderAddComponent, OrderListComponent, OrderDetailComponent]

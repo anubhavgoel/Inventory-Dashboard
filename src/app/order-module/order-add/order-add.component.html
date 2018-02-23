@@ -1,3 +1,4 @@
+<ngx-loading [show]="isLoading" [config]="{ backdropBorderRadius: '14px',fullScreenBackdrop: true}"></ngx-loading>
 <div class="mdc-toolbar-fixed-adjust mat-elevation-z8">
   <mat-accordion>
     <mat-expansion-panel [expanded]="isOpen" [disabled]="isDisabled">
@@ -9,11 +10,9 @@
           Booking details
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <button mat-raised-button (click)="isLinear = true" id="toggle-linear">Enable linear mode</button>
 
       <mat-horizontal-stepper [linear]="isLinear">
         <mat-step [stepControl]="firstFormGroup">
-            <mat-spinner *ngIf="isLoading"></mat-spinner>
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Fill out customer details</ng-template>
             <mat-form-field class="example-full-width">
@@ -72,7 +71,7 @@
         <mat-step [stepControl]="thirdFormGroup">
           <form [formGroup]="thirdFormGroup">
             <ng-template matStepLabel>Product Details</ng-template>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-half-width">
               <input matInput placeholder="Product" aria-label="State" [matAutocomplete]="auto" formControlName="product">
               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="productSelection($event)">
                 <mat-option *ngFor="let option of filteredProductOptions | async" [value]="option.product_code">
@@ -83,7 +82,9 @@
 
               </mat-autocomplete>
             </mat-form-field>
-
+            <mat-form-field class="example-half-width">
+              <input matInput type="text" formControlName="status" placeholder="Status">
+            </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext>Next</button>

@@ -5,11 +5,6 @@ import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { MatFormFieldModule,MatTableModule, MatPaginatorModule ,MatSortModule, MatFormFieldControl,MatInputModule,MatProgressSpinnerModule, MatStepperModule, MatButtonModule, MatAutocompleteModule, MatDatepickerModule, MatCardModule, MatGridListModule, MatTabsModule, MatListModule, MatSelectModule, MatIconModule } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { PapaParseModule } from 'ngx-papaparse';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { environment } from '../../environments/environment';
 import { productsRouting } from './product-routing.module';
 import {UploadService} from './upload-service';
 import { StoreDetailComponent } from './store-detail/store-detail.component';
@@ -23,8 +18,6 @@ import { StoreDetailComponent } from './store-detail/store-detail.component';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
     MatStepperModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -36,11 +29,9 @@ import { StoreDetailComponent } from './store-detail/store-detail.component';
     MatTabsModule,
     MatListModule,
     MatSelectModule,
-    PapaParseModule,
     MatIconModule,
     MatDatepickerModule,
-    productsRouting,
-    AngularFireDatabaseModule
+    productsRouting
   ],
   declarations: [ProductListComponent, ProductAddComponent, ProductDetailComponent, StoreDetailComponent],
   exports: [

@@ -7,17 +7,16 @@ import{StoreDetailComponent} from '../product-module/store-detail/store-detail.c
 
 
 const productRoutes: Routes = [
-    { path: 'products',
-      children: [
-        { path: '', component: ProductListComponent },
+    { path: '',
+    component:ProductListComponent},
+      
         { path: 'add', component: ProductAddComponent },
         { path: 'category/:location', component: StoreDetailComponent },
         { path: 'category/:location/:id', component: ProductDetailComponent },
         { path: ':id', component: ProductDetailComponent }
         
-      ]
-    }
+      
+    
   ];
   
-  export const productsRouting = RouterModule.forChild(productRoutes
-);
+  export const productsRouting = RouterModule.forChild(productRoutes);

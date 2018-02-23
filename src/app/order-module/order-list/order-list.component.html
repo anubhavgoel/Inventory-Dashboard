@@ -1,6 +1,8 @@
 <button mat-mini-fab class="floating-action" color="primary" routerLink="add">+</button>
 <div class="example-header mdc-toolbar-fixed-adjust">
 
+  <div class="outer-title">Order List</div>
+  
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
@@ -8,7 +10,7 @@
 
 <div class="example-container mat-elevation-z8">
 
- 
+  
 <mat-table [dataSource]="dataSource" matSort>
 
   <!-- ID Column -->
@@ -59,8 +61,8 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
     <mat-cell *matCellDef="let row">
       <button *ngIf="row.status=='Booked'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'delivery'}">Deliver</button>
-      <button *ngIf="row.status=='Delivered'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'return'}">Return</button>
-
+      <button *ngIf="row.status=='Delivered'" mat-raised-button color="accent" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'return'}">Return</button>
+      <button *ngIf="row.status=='Returned'" mat-raised-button color="warn" [routerLink]="['/orders/details']" [queryParams]="{ orderNumber: (row.orderNumber)}">Details</button>
     </mat-cell>
   </ng-container>
 

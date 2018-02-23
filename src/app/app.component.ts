@@ -1,5 +1,7 @@
 import {  AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import {MDCPersistentDrawer,MDCTemporaryDrawer} from '@material/drawer';
+import {MatSidenav,} from '@angular/material/sidenav';
+import{MatNavList} from '@angular/material';
 declare var mdc: any;
 @Component({
   selector: 'app-root',
@@ -8,6 +10,7 @@ declare var mdc: any;
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('drawer') drawerEl: ElementRef;
+  @ViewChild('sidenav') sidenav: MatSidenav;
   title = 'app';
   drawer: any;
   ngAfterViewInit(): void {
@@ -25,4 +28,8 @@ export class AppComponent implements AfterViewInit {
   toggle() {
     this.drawer.open = !this.drawer.open;
   }
+  close(){
+    this.sidenav.close();
+  }
+  
 }

@@ -7,7 +7,6 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import 'rxjs/add/operator/debounceTime';
 import { v4 as uuid } from 'uuid';
 import { orderConstant } from '../order-constants';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -63,6 +62,7 @@ export class OrderAddComponent implements OnInit {
   startDate:any;
   endDate:any;
   actualDeliveryDate:any;
+  actualReturnDate:any;
   get products(): FormArray{
     return <FormArray>this.thirdFormGroup.get('products');
   }
@@ -151,7 +151,7 @@ export class OrderAddComponent implements OnInit {
     this.secondFormGroup.get('orderDate').valueChanges.subscribe((data) => {
       this.minDate = data;
       console.log(data);
-      this.orderDate=data.format('DD-MM-YYYY');
+      if(data !="" && data != null){  this.orderDate=data.format('DD-MM-YYYY');}
     });
     this.secondFormGroup.get('startDate').valueChanges.subscribe((data) => {
       debugger;
@@ -169,6 +169,7 @@ export class OrderAddComponent implements OnInit {
       debugger;
       if(data !=""  && data != null){ this.actualDeliveryDate = data.format('DD-MM-YYYY');}
     });
+    
     this.sixthFormGroup.get('returnType').valueChanges.subscribe((data) => {
       debugger;
       if(data=="RentRefund"){
@@ -182,7 +183,24 @@ export class OrderAddComponent implements OnInit {
       else{
         this.rentReturn = false;
         this.securityDeduct= false;
+        this.sixthFormGroup.patchValue({
+      rentReturnAmount: 0,
+      securityDeductionAmount:0
+          
+        });
       }
+    });
+    this.sixthFormGroup.get('actualReturnDate').valueChanges.subscribe((data) => {
+      var originalEndDate=moment(this.orderData.endDate,"DD-MM-YYYY");
+      var actualEndDate=moment(data);
+      var extraDays =  actualEndDate.diff(originalEndDate,'days');
+      if(extraDays == 0)
+{
+      this.sixthFormGroup.patchValue({
+        securityToRefund : this.sixthFormGroup.get('securityWithWrapd').value
+          });
+        }
+        if(data !="" && data != null){ this.actualReturnDate = data.format('DD-MM-YYYY');}
     });
     this.sub = this.route.queryParams.subscribe(
       params => {
@@ -218,6 +236,9 @@ export class OrderAddComponent implements OnInit {
 
   }
  returnData(orderNumber) {
+   let advanceSecurity;
+   let dueSecurity;
+   
     var orderData = this.db.collection('orders').doc(orderNumber).valueChanges();
     orderData.subscribe((data) => {
       this.orderData = data;
@@ -225,10 +246,16 @@ export class OrderAddComponent implements OnInit {
     var bookingData = this.db.collection('bookings').doc(orderNumber).valueChanges();
     bookingData.subscribe((ref) => {
       this.bookingData = ref;
+      this.sixthFormGroup.patchValue({
+        securityWithWrapd: this.bookingData.advanceSecurity+ this.delData.dueSecurity,
+      });
     });
     var deliveryData = this.db.collection('delivery').doc(orderNumber).valueChanges();
     deliveryData.subscribe((ref) => {
       this.delData = ref;
+      this.sixthFormGroup.patchValue({
+        securityWithWrapd: this.bookingData.advanceSecurity+ this.delData.dueSecurity,
+      });
     });
 
   }
@@ -358,7 +385,32 @@ return this._formBuilder.group({
     this.router.navigateByUrl('/orders');
   }
   saveReturn(orderNumber){
-
+    debugger;
+    var returnId = uuid();
+    this.db.collection('orders').doc(orderNumber).update({
+      returnId: returnId,
+      status: "Returned"
+    })
+      .then(function () {
+        console.log("Document successfully updated!");
+      })
+      .catch(function (error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+      });
+      this.db.collection('return').doc(orderNumber).set({
+        returnType: this.sixthFormGroup.get('returnType').value,
+        securityWithWrapd: this.sixthFormGroup.get('securityWithWrapd').value,
+        actualReturnDate: this.actualReturnDate,
+        securityReturnMode: this.sixthFormGroup.get('securityReturnMode').value,
+        rentReturnAmount: this.sixthFormGroup.get('rentReturnAmount').value,
+        securityDeductionAmount:this.sixthFormGroup.get('securityDeductionAmount').value,
+        rentReturnReason:this.sixthFormGroup.get('rentReturnReason').value,
+        securityDeductionReason:this.sixthFormGroup.get('securityDeductionReason').value,
+        securityToRefund:this.sixthFormGroup.get('securityToRefund').value,
+        returnId: returnId,
+      });
+      this.router.navigateByUrl('/orders');  
   }
   productAvailabiltyCheck(product, startDate, endDate) {
     debugger;
