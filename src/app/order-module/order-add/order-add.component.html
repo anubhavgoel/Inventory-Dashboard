@@ -16,13 +16,10 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Fill out customer details</ng-template>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Phone" [matAutocomplete]="auto1" formControlName="phone">
-              <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="customerSelection($event)">
-                <mat-option *ngFor="let cust of filteredCustomerOptions | async" [value]="cust.phone">
-                  <span>{{ cust.phone }}</span> |
-                  <small>Name: {{cust.name}}</small>
-                </mat-option>
-              </mat-autocomplete>
+              <input matInput placeholder="Phone" formControlName="phone">
+              <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="customerSelection()">
+                <mat-icon>search</mat-icon>
+              </button>
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Name" formControlName="name" required>
@@ -36,8 +33,7 @@
               <input matInput placeholder="Pincode" formControlName="pincode" type="number">
             </mat-form-field>
             <div>
-              <button mat-button (click)="customerAdd()">Add</button>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button matStepperNext  (click)="customerAdd()"> Next</button>
             </div>
           </form>
         </mat-step>
@@ -86,10 +82,16 @@
               <input matInput type="text" formControlName="status" placeholder="Status">
             </mat-form-field>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperPrevious (click)="resetProductForm()">Back</button>
               <button mat-button matStepperNext>Next</button>
             </div>
           </form>
+          <mat-list role="list">
+            <mat-list-item role="listitem">  {{conflictingDates?.product}} -- {{conflictingDates?.orderNumber}} -- {{conflictingDates?.startDate}} -- {{conflictingDates?.endDate}}</mat-list-item>
+          </mat-list>
+          <div>
+          
+          </div>
           <mat-card class="example-card">
             <mat-card-header>
               <mat-card-title>{{selectedProduct?.product_name}}</mat-card-title>

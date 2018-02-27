@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl, FormsModule,AbstractControl,FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl, FormsModule, AbstractControl, FormArray } from '@angular/forms';
 import { MatFormField, MatFormFieldControl } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import validator from 'devextreme/ui/validator';
@@ -20,9 +20,9 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class OrderAddComponent implements OnInit {
   panelOpenState: boolean = false;
-  isLinear = false;
+  isLinear = true;
   isOpen = true;
-  isLoading= true;
+  isLoading = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -54,16 +54,17 @@ export class OrderAddComponent implements OnInit {
   isreturnOpen = false;
   orderData: any;
   bookingData: any;
-  delData:any;
+  delData: any;
   minDate: Moment;
-  rentReturn= false;
+  rentReturn = false;
   securityDeduct = false;
-  orderDate:any;
-  startDate:any;
-  endDate:any;
-  actualDeliveryDate:any;
-  actualReturnDate:any;
-  get products(): FormArray{
+  orderDate: any;
+  startDate: any;
+  endDate: any;
+  actualDeliveryDate: any;
+  actualReturnDate: any;
+  conflictingDates:any;
+  get products(): FormArray {
     return <FormArray>this.thirdFormGroup.get('products');
   }
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
@@ -72,13 +73,9 @@ export class OrderAddComponent implements OnInit {
     this.test = this.prodcollection.valueChanges();
     this.test.subscribe((data) => {
       this.xyz = data;
+      this.isLoading = false;
     });
-    this.custcollection = this.db.collection('customers');
-    this.custSubscription = this.custcollection.valueChanges();
-    this.custSubscription.subscribe((data) => {
-      this.custData = data;
-      this.isLoading= false;
-    });
+
   }
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -89,14 +86,14 @@ export class OrderAddComponent implements OnInit {
 
     });
     this.secondFormGroup = this._formBuilder.group({
-      orderNumber: ['', [Validators.required,Validators.pattern('(PN|JP|LX|LN)-[0-9][0-9][0-9]')]],
+      orderNumber: ['', [Validators.required, Validators.pattern('(PN|JP|LX|LN)-[0-9][0-9][0-9]')]],
       orderDate: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
     });
     this.thirdFormGroup = this._formBuilder.group({
       product: [''],
-      stateCtrl: ['']
+      status: ['Available', [Validators.required, Validators.pattern('(Available)')]]
     });
     this.fourthFormGroup = this._formBuilder.group({
       subTotalAmount: [{ value: '', disabled: true }],
@@ -120,21 +117,21 @@ export class OrderAddComponent implements OnInit {
       actualReturnDate: [''],
       securityReturnMode: [''],
       rentReturnAmount: [''],
-      securityDeductionAmount:[''],
-      rentReturnReason:[''],
-      securityDeductionReason:[''],
-      securityToRefund:['']
+      securityDeductionAmount: [''],
+      rentReturnReason: [''],
+      securityDeductionReason: [''],
+      securityToRefund: ['']
     });
 
     this.filteredCustomerOptions = this.firstFormGroup.get('phone').valueChanges
       .pipe(
-      startWith(''),
-      map(val => this.filtercustomer(val))
+        startWith(''),
+        map(val => this.filtercustomer(val))
       );
     this.filteredProductOptions = this.thirdFormGroup.get('product').valueChanges
       .pipe(
-      startWith(''),
-      map(val => this.filterProduct(val))
+        startWith(''),
+        map(val => this.filterProduct(val))
       );
     this.fourthFormGroup.get('delivery').valueChanges.subscribe((data) => {
       var grand = +this.fourthFormGroup.get('subTotalAmount').value + +this.fourthFormGroup.get('delivery').value - +this.fourthFormGroup.get('discount').value;
@@ -151,71 +148,70 @@ export class OrderAddComponent implements OnInit {
     this.secondFormGroup.get('orderDate').valueChanges.subscribe((data) => {
       this.minDate = data;
       console.log(data);
-      if(data !="" && data != null){  this.orderDate=data.format('DD-MM-YYYY');}
+      if (data != "" && data != null) { this.orderDate = data.format('DD-MM-YYYY'); }
     });
     this.secondFormGroup.get('startDate').valueChanges.subscribe((data) => {
       debugger;
-      if(data !="" && data != null){ this.startDate = data.format('DD-MM-YYYY');}
-   
+      if (data != "" && data != null) { this.startDate = data.format('DD-MM-YYYY'); }
+
       this.secondFormGroup.patchValue({
         endDate: moment(data).add(2, 'days'),
       });
     });
     this.secondFormGroup.get('endDate').valueChanges.subscribe((data) => {
       debugger;
-      if(data !=""  && data != null){ this.endDate = data.format('DD-MM-YYYY');}
+      if (data != "" && data != null) { this.endDate = data.format('DD-MM-YYYY'); }
     });
     this.fifthFormGroup.get('actualDeliveryDate').valueChanges.subscribe((data) => {
       debugger;
-      if(data !=""  && data != null){ this.actualDeliveryDate = data.format('DD-MM-YYYY');}
+      if (data != "" && data != null) { this.actualDeliveryDate = data.format('DD-MM-YYYY'); }
     });
-    
+
     this.sixthFormGroup.get('returnType').valueChanges.subscribe((data) => {
       debugger;
-      if(data=="RentRefund"){
+      if (data == "RentRefund") {
         this.rentReturn = true;
-        this.securityDeduct= false;
+        this.securityDeduct = false;
       }
-     else if(data=="SecurityDeduction"){
+      else if (data == "SecurityDeduction") {
         this.rentReturn = false;
-        this.securityDeduct= true;
+        this.securityDeduct = true;
       }
-      else{
+      else {
         this.rentReturn = false;
-        this.securityDeduct= false;
+        this.securityDeduct = false;
         this.sixthFormGroup.patchValue({
-      rentReturnAmount: 0,
-      securityDeductionAmount:0
-          
+          rentReturnAmount: 0,
+          securityDeductionAmount: 0
+
         });
       }
     });
     this.sixthFormGroup.get('actualReturnDate').valueChanges.subscribe((data) => {
-      var originalEndDate=moment(this.orderData.endDate,"DD-MM-YYYY");
-      var actualEndDate=moment(data);
-      var extraDays =  actualEndDate.diff(originalEndDate,'days');
-      if(extraDays == 0)
-{
-      this.sixthFormGroup.patchValue({
-        securityToRefund : this.sixthFormGroup.get('securityWithWrapd').value
-          });
-        }
-        if(data !="" && data != null){ this.actualReturnDate = data.format('DD-MM-YYYY');}
+      var originalEndDate = moment(this.orderData.endDate, "DD-MM-YYYY");
+      var actualEndDate = moment(data);
+      var extraDays = actualEndDate.diff(originalEndDate, 'days');
+      if (extraDays == 0) {
+        this.sixthFormGroup.patchValue({
+          securityToRefund: this.sixthFormGroup.get('securityWithWrapd').value
+        });
+      }
+      if (data != "" && data != null) { this.actualReturnDate = data.format('DD-MM-YYYY'); }
     });
     this.sub = this.route.queryParams.subscribe(
       params => {
         let action = params['action'];
         let orderNumber = params['orderNumber'];
         if (action == "delivery") {
-          this.isOpen= false;
-          this.isDisabled= true;
+          this.isOpen = false;
+          this.isDisabled = true;
           this.isDeliveryDisabled = false;
           this.isdeliveryOpen = true;
           this.deliveryData(orderNumber);
         }
         if (action == "return") {
-          this.isOpen= false;
-          this.isDisabled= true;
+          this.isOpen = false;
+          this.isDisabled = true;
           this.isReturnDisabled = false;
           this.isreturnOpen = true;
           this.returnData(orderNumber);
@@ -235,10 +231,10 @@ export class OrderAddComponent implements OnInit {
     });
 
   }
- returnData(orderNumber) {
-   let advanceSecurity;
-   let dueSecurity;
-   
+  returnData(orderNumber) {
+    let advanceSecurity;
+    let dueSecurity;
+
     var orderData = this.db.collection('orders').doc(orderNumber).valueChanges();
     orderData.subscribe((data) => {
       this.orderData = data;
@@ -247,22 +243,22 @@ export class OrderAddComponent implements OnInit {
     bookingData.subscribe((ref) => {
       this.bookingData = ref;
       this.sixthFormGroup.patchValue({
-        securityWithWrapd: this.bookingData.advanceSecurity+ this.delData.dueSecurity,
+        securityWithWrapd: this.bookingData.advanceSecurity + this.delData.dueSecurity,
       });
     });
     var deliveryData = this.db.collection('delivery').doc(orderNumber).valueChanges();
     deliveryData.subscribe((ref) => {
       this.delData = ref;
       this.sixthFormGroup.patchValue({
-        securityWithWrapd: this.bookingData.advanceSecurity+ this.delData.dueSecurity,
+        securityWithWrapd: this.bookingData.advanceSecurity + this.delData.dueSecurity,
       });
     });
 
   }
-  addProduct():FormGroup{
-return this._formBuilder.group({
-  product: ''
-});
+  addProduct(): FormGroup {
+    return this._formBuilder.group({
+      product: ''
+    });
   }
   filtercustomer(val: string): string[] {
     console.log(this.custData);
@@ -281,12 +277,27 @@ return this._formBuilder.group({
   }
   customerAdd() {
     debugger;
-    this.custcollection.doc(this.firstFormGroup.get('phone').value).set({
-      name: this.firstFormGroup.get('name').value,
-      phone: this.firstFormGroup.get('phone').value,
-      address: this.firstFormGroup.get('address').value,
-      pincode: this.firstFormGroup.get('pincode').value
+    this.proddoc = this.db.collection('customers').doc(this.firstFormGroup.get('phone').value);
+    this.test = this.proddoc.valueChanges();
+    this.test.subscribe((data) => {
+      if (data) {
+
+      }
+      else {
+        this.custcollection.doc(this.firstFormGroup.get('phone').value).set({
+          name: this.firstFormGroup.get('name').value,
+          phone: this.firstFormGroup.get('phone').value,
+          address: this.firstFormGroup.get('address').value,
+          pincode: this.firstFormGroup.get('pincode').value
+        });
+        this.snackBar.open("User Added", "", {
+          duration: 3000,
+        });
+      }
     });
+
+
+
     this.snackBar.open("User Added", "", {
       duration: 3000,
     });
@@ -309,17 +320,24 @@ return this._formBuilder.group({
     });
 
   }
-  customerSelection(option) {
-    this.proddoc = this.db.collection('customers').doc(option.option.value);
+  customerSelection() {
+    debugger;
+    this.proddoc = this.db.collection('customers').doc(this.firstFormGroup.get('phone').value);
     this.test = this.proddoc.valueChanges();
     this.test.subscribe((data) => {
-      this.firstFormGroup.patchValue({
-        name: data.name,
-        address: data.address,
-        pincode: data.pincode
-      });
+      if (data != null) {
+        this.firstFormGroup.patchValue({
+          name: data.name,
+          address: data.address,
+          pincode: data.pincode
+        });
+
+        this.snackBar.open("Customer found in our List", "", { duration: 3000, });
+      }
+      else {
+        this.snackBar.open("Customer not found in our List.Please Add", "", { duration: 3000, });
+      }
     });
-    this.snackBar.open("Customer found in our List", "", { duration: 3000, });
   }
   saveOrder() {
     var bookingId = uuid();
@@ -384,7 +402,7 @@ return this._formBuilder.group({
     });
     this.router.navigateByUrl('/orders');
   }
-  saveReturn(orderNumber){
+  saveReturn(orderNumber) {
     debugger;
     var returnId = uuid();
     this.db.collection('orders').doc(orderNumber).update({
@@ -398,19 +416,19 @@ return this._formBuilder.group({
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
       });
-      this.db.collection('return').doc(orderNumber).set({
-        returnType: this.sixthFormGroup.get('returnType').value,
-        securityWithWrapd: this.sixthFormGroup.get('securityWithWrapd').value,
-        actualReturnDate: this.actualReturnDate,
-        securityReturnMode: this.sixthFormGroup.get('securityReturnMode').value,
-        rentReturnAmount: this.sixthFormGroup.get('rentReturnAmount').value,
-        securityDeductionAmount:this.sixthFormGroup.get('securityDeductionAmount').value,
-        rentReturnReason:this.sixthFormGroup.get('rentReturnReason').value,
-        securityDeductionReason:this.sixthFormGroup.get('securityDeductionReason').value,
-        securityToRefund:this.sixthFormGroup.get('securityToRefund').value,
-        returnId: returnId,
-      });
-      this.router.navigateByUrl('/orders');  
+    this.db.collection('return').doc(orderNumber).set({
+      returnType: this.sixthFormGroup.get('returnType').value,
+      securityWithWrapd: this.sixthFormGroup.get('securityWithWrapd').value,
+      actualReturnDate: this.actualReturnDate,
+      securityReturnMode: this.sixthFormGroup.get('securityReturnMode').value,
+      rentReturnAmount: this.sixthFormGroup.get('rentReturnAmount').value,
+      securityDeductionAmount: this.sixthFormGroup.get('securityDeductionAmount').value,
+      rentReturnReason: this.sixthFormGroup.get('rentReturnReason').value,
+      securityDeductionReason: this.sixthFormGroup.get('securityDeductionReason').value,
+      securityToRefund: this.sixthFormGroup.get('securityToRefund').value,
+      returnId: returnId,
+    });
+    this.router.navigateByUrl('/orders');
   }
   productAvailabiltyCheck(product, startDate, endDate) {
     debugger;
@@ -422,43 +440,62 @@ return this._formBuilder.group({
     });
     var prod = productCollection.valueChanges();
     prod.subscribe((data) => {
+      this.conflictingDates = "";
+      this.thirdFormGroup.patchValue({
+        status: "Available"
+      });
       console.log(data);
-      if(data.length>0){
-      this.queryProduct = data[0];
-  var a = moment(inputStartDate);
-  var b =moment(this.queryProduct.startDate);
-  var startDiffDays = a.diff(b, 'days');
-  var c = moment(inputEndDate);
-  var d = moment(this.queryProduct.endDate)
-  var endDiffDays = c.diff(d, 'days');
-  var totaldDiffDays = a.diff(c, 'days');
+      if (data.length > 0) {
+        this.queryProduct = data;
+        this.queryProduct.map((value,index,array)=>{
+          debugger;
+          var a = moment(inputStartDate);
+          var b = moment(value.startDate, 'DD-MM-YYYY');
+          var startDiffDays = Math.abs(a.diff(b, 'days'));
+          var c = moment(inputEndDate);
+          var d = moment(value.endDate, 'DD-MM-YYYY')
+          var endDiffDays = Math.abs(c.diff(d, 'days'));
+          var totaldDiffDays = Math.abs(a.diff(c, 'days'));
+          if ((startDiffDays <= totaldDiffDays) && (endDiffDays <= totaldDiffDays)) {
+            this.thirdFormGroup.patchValue({
+              status: "Not Available"
+            });
+            this.conflictingDates = value;
+          }
+        })
+        }
 
-      if ((startDiffDays <= totaldDiffDays) && (endDiffDays <= totaldDiffDays)) {
-        alert("Not Available");
-      }}
     })
+  }
+  resetProductForm(){
+  this.conflictingDates="";
+  this.selectedProduct=[];
+  this.thirdFormGroup.reset({
+    product:'',
+    status:'Available'
+  })
   }
 }
 export function ValidateProduct(control: AbstractControl) {
- var inputStartDate = this.secondFormGroup.get('startDate').value;
- var inputEndDate = this.secondFormGroup.get('endDate').value;
- var productCollection = this.db.collection('productAvailability', ref => {
-  return ref
-    .where('product', '==', control.value)
-});
-var prod = productCollection.valueChanges();
-prod.subscribe((data) => {
-  this.queryProduct = data[0];
-  var a = moment(inputStartDate);
-  var b =moment(this.queryProduct.startDate);
-  var startDiffDays = a.diff(b);
-  var c = moment(inputEndDate);
-  var d = moment(this.queryProduct.endDate)
-  var endDiffDays = c.diff(d);
-  var totaldDiffDays = a.diff(c);
-  if ((startDiffDays <= totaldDiffDays) && (endDiffDays <= totaldDiffDays)) {
-    return { validProduct: true };
-  }
-  return null;
-});
+  var inputStartDate = this.secondFormGroup.get('startDate').value;
+  var inputEndDate = this.secondFormGroup.get('endDate').value;
+  var productCollection = this.db.collection('productAvailability', ref => {
+    return ref
+      .where('product', '==', control.value)
+  });
+  var prod = productCollection.valueChanges();
+  prod.subscribe((data) => {
+    this.queryProduct = data[0];
+    var a = moment(inputStartDate);
+    var b = moment(this.queryProduct.startDate);
+    var startDiffDays = a.diff(b);
+    var c = moment(inputEndDate);
+    var d = moment(this.queryProduct.endDate)
+    var endDiffDays = c.diff(d);
+    var totaldDiffDays = a.diff(c);
+    if ((startDiffDays <= totaldDiffDays) && (endDiffDays <= totaldDiffDays)) {
+      return { validProduct: true };
+    }
+    return null;
+  });
 }
