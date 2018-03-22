@@ -1,36 +1,45 @@
 .example-full-width {
-    width: 90%;
-  }
-  .example-half-width {
-    width: 45%;
-  }
-  .example-card {
-    max-width: 400px;
-  }
-.return-container{
+  width: 90%;
+}
+.example-half-width {
+  width: 45%;
+}
+.example-card {
+  max-width: 400px;
+}
+.return-container {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 2fr;
   grid-gap: 2rem;
-  grid-template-areas:"order booking delivery"
-  "return return return";
-  @media(max-width:1024px){
-    grid-template-columns: repeat(1,1fr);
-    grid-template-rows: repeat(4,1fr);
-    grid-template-areas:"order" "booking" "delivery"
-    "return";
+  grid-template-areas:
+    "order booking delivery"
+    "return return return";
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+      "order" "booking" "delivery"
+      "return";
   }
 }
-.order{
+.order {
   grid-area: order;
 }
-.booking{
+.booking {
   grid-area: booking;
 }
-.delivery{
+.delivery {
   grid-area: delivery;
 }
-.return{
+.return {
   grid-area: return;
+}
+
+.product-container {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
 }

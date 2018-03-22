@@ -1,16 +1,6 @@
-
-
-  .mat-tab-body-content { height: 100%; }
-
-  .layout-3{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;
-        grid-auto-rows: minmax(50px, auto);
-        margin-top: 50px;
-        
-  }
-  mat-tab-group{
-      margin-top: 70px;
-      height: 100vh;
-  }
+.category-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  margin: 100px;
+}

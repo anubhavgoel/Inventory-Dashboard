@@ -166,6 +166,9 @@
                                     <a href="../injectables/ApiService.html" >ApiService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/DeleteRecordService.html" >DeleteRecordService</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/UploadService.html" >UploadService</a>
                                 </li>
                         </ul>
@@ -363,6 +366,9 @@
                    >
                                        <li class="link">
                                            <a href="../injectables/ApiService.html" >ApiService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/DeleteRecordService.html" >DeleteRecordService</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/UploadService.html" >UploadService</a>
@@ -635,6 +641,8 @@ import { PapaParseModule } from &#x27;ngx-papaparse&#x27;;
 import { ProductModuleModule } from &#x27;./product-module/product-module.module&#x27;;
 import { OrderModuleModule } from &#x27;./order-module/order-module.module&#x27;;
 import { DashboardComponent } from &#x27;./dashboard/dashboard.component&#x27;;
+import{MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule} from &#x27;@angular/material&#x27;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -652,7 +660,11 @@ import { DashboardComponent } from &#x27;./dashboard/dashboard.component&#x27;;
     CommonModule,
     PapaParseModule,
     ProductModuleModule,
-    OrderModuleModule
+    OrderModuleModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule
   ],
   bootstrap: [AppComponent]
 })

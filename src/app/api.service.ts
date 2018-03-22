@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import{Product} from './product';
+import { Injectable } from "@angular/core";
+import { Http } from "@angular/http";
+import "rxjs/add/observable/throw";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
+import { Observable } from "rxjs/Observable";
+import { environment } from "../environments/environment";
+import { Product } from "./product";
 const API_URL = environment.apiUrl;
 const Shipment_URL = environment.deliveryUrl;
 const orders_URL = environment.ordersUrl;
 
 @Injectable()
 export class ApiService {
-  data : any=[];
-  constructor(private http: Http) { }
+  data: any = [];
+  constructor(private http: Http) {}
 
- /* public getAllTodos(): Observable<Product[]> {
+  /* public getAllTodos(): Observable<Product[]> {
     return this.http
       .get(API_URL)
       .map(response => {
@@ -24,31 +24,22 @@ export class ApiService {
       });
   }*/
 
-  public getAllProducts(store):any{
-   var finalUrl = API_URL + store ; 
-   debugger;
-   return this.http.get(finalUrl);
-   
+  public getAllProducts(store): any {
+    const finalUrl = API_URL + store;
+    return this.http.get(finalUrl);
   }
-  public getProduct(product_code):any{
-    var finalUrl = API_URL + '&criteria=Product_Code=="'+ product_code +"\""; 
-    debugger;
+  public getProduct(product_code): any {
+    const finalUrl = API_URL + "&criteria=Product_Code==\"" + product_code + "\"";
     return this.http.get(finalUrl);
-    
-   }
+  }
 
-  public getAllShipments():any{
-    var finalUrl = Shipment_URL; 
-    debugger;
+  public getAllShipments(): any {
+    const finalUrl = Shipment_URL;
     return this.http.get(finalUrl);
-    
-   }
+  }
 
-   public getAllOrders():any{
-    var finalUrl = orders_URL; 
-    debugger;
+  public getAllOrders(): any {
+    const finalUrl = orders_URL;
     return this.http.get(finalUrl);
-    
-   }
-
+  }
 }

@@ -1,14 +1,34 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OrderAddComponent } from './order-add/order-add.component';
-import { OrderListComponent } from './order-list/order-list.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { MatExpansionModule, MatFormFieldModule, MatStepperModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatListModule, MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule, MatSelectModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
-import{ordersRouting} from './order-routing.module'
-import { ReactiveFormsModule } from '@angular/forms';
-import{MatMomentDateModule} from '@angular/material-moment-adapter';
-import { TextMaskModule } from 'angular2-text-mask';
-import { LoadingModule } from 'ngx-loading';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatTableModule
+} from "@angular/material";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { TextMaskModule } from "angular2-text-mask";
+import { DragulaModule } from "ng2-dragula";
+import { LoadingModule } from "ngx-loading";
+import { OrderAddComponent } from "./order-add/order-add.component";
+import { OrderDetailComponent } from "./order-detail/order-detail.component";
+import { OrderListComponent } from "./order-list/order-list.component";
+import { ordersRouting } from "./order-routing.module";
+import { OrderTaskboardComponent } from "./order-taskboard/order-taskboard.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -25,15 +45,21 @@ import { LoadingModule } from 'ngx-loading';
     MatDatepickerModule,
     MatMomentDateModule,
     MatCardModule,
+    MatMenuModule,
     MatTableModule,
     MatSelectModule,
     MatDialogModule,
     MatIconModule,
     TextMaskModule,
     MatProgressSpinnerModule,
-    LoadingModule
-    
+    LoadingModule,
+    DragulaModule
   ],
-  declarations: [OrderAddComponent, OrderListComponent, OrderDetailComponent]
+  declarations: [
+    OrderAddComponent,
+    OrderListComponent,
+    OrderDetailComponent,
+    OrderTaskboardComponent
+  ]
 })
-export class OrderModuleModule { }
+export class OrderModuleModule {}

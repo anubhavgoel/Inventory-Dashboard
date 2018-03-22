@@ -7,6 +7,11 @@
 
 # dependencies
 /node_modules
+/src/enviroments
+/fire
+/documentation
+/functions
+/report
 
 # IDEs and editors
 /.idea

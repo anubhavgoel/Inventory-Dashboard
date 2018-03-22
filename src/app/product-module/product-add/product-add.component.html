@@ -64,20 +64,23 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <button mat-button (click)="link()">Link Similar Products</button>
+        <tag-input *ngIf="linkForm" formControlName="similarProducts">
+          <tag-input-dropdown [autocompleteItems]="similarProducts">
+          </tag-input-dropdown>
+        </tag-input>
       </div>
       <div>
-          <h3>Single File Upload</h3>
+        <h3>Single File Upload</h3>
 
-          <label>
-            <input type="file" class="button" (change)="detectFiles($event)">
-          </label>
-          <button class="button is-primary"
-            [disabled]="!selectedFiles"
-            (click)="uploadSingle()">
-            Upload Single
-          </button>
+        <label>
+          <input type="file" class="button" (change)="detectFiles($event)">
+        </label>
+        <button class="button is-primary" [disabled]="!selectedFiles" (click)="uploadSingle()">
+          Upload Single
+        </button>
         <div class="photo-container">
-            <img [src]="image" alt="Smiley face" width="400px" >
+          <img [src]="image" alt="Smiley face" width="400px">
         </div>
       </div>
     </div>

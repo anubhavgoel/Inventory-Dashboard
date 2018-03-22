@@ -12,13 +12,15 @@ class="mdc-toolbar mdc-toolbar--fixed mdc-theme--text-primary-on-background">
 </div>
 </header> -->
 <div class="example-container">
-<mat-toolbar class="example-toolbar" color="primary">
-        <mat-toolbar-row>
-          <button class="mat-icon-button" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-          <span>Sample App</span>
-        </mat-toolbar-row>
-</mat-toolbar>
-<!-- <aside id="shrine-nav-menu" class="mdc-temporary-drawer" #drawer data-mdc-auto-init="MDCTemporaryDrawer">
+  <mat-toolbar class="example-toolbar" color="primary">
+    <mat-toolbar-row>
+      <button class="mat-icon-button" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Sample App</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <!-- <aside id="shrine-nav-menu" class="mdc-temporary-drawer" #drawer data-mdc-auto-init="MDCTemporaryDrawer">
 <nav class="mdc-temporary-drawer__drawer">
 <header class="mdc-temporary-drawer__header"></header>
 <nav class="mdc-temporary-drawer__content mdc-list">
@@ -34,19 +36,19 @@ class="mdc-toolbar mdc-toolbar--fixed mdc-theme--text-primary-on-background">
 
 -->
 
-<mat-sidenav-container class="example-sidenav-container" (backdropClick)="sidenav.close()" >
-  <mat-sidenav #sidenav (keydown.escape)="sidenav.close()">
+  <mat-sidenav-container class="example-sidenav-container" (backdropClick)="sidenav.close()">
+    <mat-sidenav #sidenav (keydown.escape)="sidenav.close()">
       <mat-nav-list>
-      <a mat-list-item routerLink="">Dashboard</a>
-      <a mat-list-item routerLink="orders">Orders</a>
-      <a mat-list-item routerLink="products">Products</a>
+        <a mat-list-item routerLink="">Dashboard</a>
+        <a mat-list-item routerLink="orders">Orders</a>
+        <a mat-list-item routerLink="products">Products</a>
+        <a mat-list-item routerLink="orders/taskboard">Taskboard</a>
       </mat-nav-list>
-  </mat-sidenav>
+    </mat-sidenav>
 
-  <mat-sidenav-content>
+    <mat-sidenav-content>
       <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
 </div>
-

@@ -1,0 +1,29 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  margin: 100px 20px 0;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.container {
+  background-color: rgba(0, 5, 2, 0.2);
+}
+.container mat-card,
+.gu-mirror {
+  margin: 10px;
+  padding: 10px;
+  transition: opacity 0.4s ease-in-out;
+}
+.container div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}

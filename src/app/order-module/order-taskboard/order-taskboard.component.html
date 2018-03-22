@@ -1,0 +1,24 @@
+<div>
+  <div class='wrapper'>
+    <mat-card class='container' id="Booked" [dragula]='"first-bag"' [dragulaModel]='bookedOrder'>
+      Booked
+      <mat-card *ngFor="let item of bookedOrder" id="{{item.orderNumber}}">{{item.orderNumber}}</mat-card>
+    </mat-card>
+    <mat-card class='container' id="Alteration" [dragula]='"first-bag"' [dragulaModel]='alterationOrder'>
+      Alteration
+      <mat-card *ngFor="let item of alterationOrder" id="{{item.orderNumber}}">{{item.orderNumber}}</mat-card>
+    </mat-card>
+    <mat-card class='container' id="dry" [dragula]='"first-bag"'>
+      Dry cleaning
+      <mat-card>PN-003</mat-card>
+      <mat-card>PN-003</mat-card>
+      <mat-card>PN-003</mat-card>
+    </mat-card>
+    <mat-card class='container' id="pack" [dragula]='"first-bag"'>
+      Packed
+      <mat-card>PN-003</mat-card>
+      <mat-card>PN-003</mat-card>
+      <mat-card>PN-003</mat-card>
+    </mat-card>
+  </div>
+</div>

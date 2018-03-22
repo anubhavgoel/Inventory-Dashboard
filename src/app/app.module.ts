@@ -1,26 +1,28 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { environment } from '../environments/environment';
-import { HttpModule } from '@angular/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { PapaParseModule } from 'ngx-papaparse';
-import { ProductModuleModule } from './product-module/product-module.module';
-import { OrderModuleModule } from './order-module/order-module.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import{MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule} from '@angular/material'
-
+import { CommonModule } from "@angular/common";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { HttpModule } from "@angular/http";
+import {
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule
+} from "@angular/material";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AngularFireModule } from "angularfire2";
+import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFirestoreModule } from "angularfire2/firestore";
+import { CardComponent } from "beryl";
+import { PapaParseModule } from "ngx-papaparse";
+import { environment } from "../environments/environment";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { OrderModuleModule } from "./order-module/order-module.module";
+import { ProductModuleModule } from "./product-module/product-module.module";
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent
-  ],
+  declarations: [AppComponent, DashboardComponent, CardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,4 +43,4 @@ import{MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule} from '@
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

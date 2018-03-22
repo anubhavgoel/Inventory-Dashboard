@@ -1,3 +1,67 @@
-<p>
-  order-detail works!
-</p>
+<div class="container">
+  <div class="item0 mat-display-1">{{orderData?.orderNumber}}</div>
+  <div class="item1">
+    <mat-card class="order-container">
+      <mat-card class="mat-elevation-z8">
+        <mat-card-subtitle>Customer Details</mat-card-subtitle>
+        <mat-list role="list">
+          <mat-list-item role="listitem">Name: {{orderData?.name}}</mat-list-item>
+          <mat-list-item role="listitem">Phone: {{orderData?.phone}}</mat-list-item>
+          <mat-list-item role="listitem">Address: {{orderData?.address}}</mat-list-item>
+          <mat-list-item role="listitem">pincode: {{orderData?.pincode}}</mat-list-item>
+
+        </mat-list>
+      </mat-card>
+      <mat-card class="mat-elevation-z8">
+        <mat-card-subtitle>Dates Details</mat-card-subtitle>
+        <mat-list role="list">
+          <mat-list-item role="listitem">Order Date: {{orderData?.orderDate}}</mat-list-item>
+          <mat-list-item role="listitem">Start Date: {{orderData?.startDate}}</mat-list-item>
+          <mat-list-item role="listitem">End Date: {{orderData?.endDate}}</mat-list-item>
+          <mat-list-item role="listitem">Added Date: {{orderData?.pincode}}</mat-list-item>
+
+        </mat-list>
+      </mat-card>
+      <mat-card class="mat-elevation-z8">
+        <mat-card-subtitle>Product Details</mat-card-subtitle>
+        <mat-list role="list">
+          <mat-list-item role="listitem">Product: {{orderData?.product}}</mat-list-item>
+          <mat-list-item role="listitem">Rent: {{orderData?.subTotalAmount}}</mat-list-item>
+          <mat-list-item role="listitem">Delivery: {{orderData?.delivery}} || Discount: {{orderData?.discount}}</mat-list-item>
+          <mat-list-item role="listitem">GrandTotal: {{orderData?.grandTotal}}</mat-list-item>
+        </mat-list>
+      </mat-card>
+    </mat-card>
+  </div>
+  <div class="item2">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-title>Booking Details</mat-card-title>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Advance amount paid: {{bookingData?.advanceAmount}}</mat-list-item>
+        <mat-list-item role="listitem">Advance Security paid: {{bookingData?.advanceSecurity}}</mat-list-item>
+        <mat-list-item role="listitem">Mode: {{bookingData?.paymentMode}}</mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+  <div class="item3">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-title>Delivery Details</mat-card-title>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Actual Delivery Date: {{deliveryData?.actualDeliveryDate}}</mat-list-item>
+        <mat-list-item role="listitem">Due Rent Paid: {{deliveryData?.dueRent}} || Mode: {{deliveryData?.dueRentMode}}</mat-list-item>
+        <mat-list-item role="listitem">Due Security Paid: {{deliveryData?.dueSecurity}} || Mode: {{deliveryData?.dueSecurityMode}}</mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+  <div class="item4">
+    <mat-card class="mat-elevation-z8">
+      <mat-card-title>Return Details</mat-card-title>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Actual return Date: {{returnData?.actualReturnDate}}</mat-list-item>
+        <mat-list-item role="listitem">Return Type: {{returnData?.returnType}}</mat-list-item>
+        <mat-list-item role="listitem">Security to Refund: {{returnData?.securityToRefund}} || Mode: {{returnData?.securityReturnMode}}</mat-list-item>
+
+      </mat-list>
+    </mat-card>
+  </div>
+</div>

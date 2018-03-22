@@ -166,6 +166,9 @@
                                     <a href="../injectables/ApiService.html" >ApiService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/DeleteRecordService.html" >DeleteRecordService</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/UploadService.html" >UploadService</a>
                                 </li>
                         </ul>
@@ -363,6 +366,9 @@
                    >
                                        <li class="link">
                                            <a href="../injectables/ApiService.html" >ApiService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/DeleteRecordService.html" >DeleteRecordService</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/UploadService.html" >UploadService</a>
@@ -580,16 +586,35 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { CommonModule } from &#x27;@angular/common&#x27;;
-import { OrderAddComponent } from &#x27;./order-add/order-add.component&#x27;;
-import { OrderListComponent } from &#x27;./order-list/order-list.component&#x27;;
-import { OrderDetailComponent } from &#x27;./order-detail/order-detail.component&#x27;;
-import { MatExpansionModule, MatFormFieldModule, MatStepperModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatListModule, MatSnackBarModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule, MatSelectModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule } from &#x27;@angular/material&#x27;;
-import{ordersRouting} from &#x27;./order-routing.module&#x27;
-import { ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
-import{MatMomentDateModule} from &#x27;@angular/material-moment-adapter&#x27;;
-import { TextMaskModule } from &#x27;angular2-text-mask&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { CommonModule } from &quot;@angular/common&quot;;
+import { NgModule } from &quot;@angular/core&quot;;
+import { ReactiveFormsModule } from &quot;@angular/forms&quot;;
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatTableModule
+} from &quot;@angular/material&quot;;
+import { MatMomentDateModule } from &quot;@angular/material-moment-adapter&quot;;
+import { TextMaskModule } from &quot;angular2-text-mask&quot;;
+import { LoadingModule } from &quot;ngx-loading&quot;;
+import { OrderAddComponent } from &quot;./order-add/order-add.component&quot;;
+import { OrderDetailComponent } from &quot;./order-detail/order-detail.component&quot;;
+import { OrderListComponent } from &quot;./order-list/order-list.component&quot;;
+import { ordersRouting } from &quot;./order-routing.module&quot;;
 @NgModule({
   imports: [
     CommonModule,
@@ -606,17 +631,18 @@ import { TextMaskModule } from &#x27;angular2-text-mask&#x27;;
     MatDatepickerModule,
     MatMomentDateModule,
     MatCardModule,
+    MatMenuModule,
     MatTableModule,
     MatSelectModule,
     MatDialogModule,
     MatIconModule,
     TextMaskModule,
-    MatProgressSpinnerModule
-    
+    MatProgressSpinnerModule,
+    LoadingModule
   ],
   declarations: [OrderAddComponent, OrderListComponent, OrderDetailComponent]
 })
-export class OrderModuleModule { }
+export class OrderModuleModule {}
 </code></pre>
     </div>
 </div>

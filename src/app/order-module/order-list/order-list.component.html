@@ -2,72 +2,100 @@
 <div class="example-header mdc-toolbar-fixed-adjust">
 
   <div class="outer-title">Order List</div>
-  
-  <mat-form-field>
+
+  <mat-form-field class="example-half-width">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+  <button mat-icon-button (click)="exportData()">
+    <mat-icon aria-label="export data">file_download</mat-icon>
+  </button>
+  <mat-form-field class="example-half-width">
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="applyDateFilter($event.target.value)" (dateChange)="applyDateFilter($event.target.value)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 </div>
 
 <div class="example-container mat-elevation-z8">
 
-  
-<mat-table [dataSource]="dataSource" matSort>
 
-  <!-- ID Column -->
-  <ng-container matColumnDef="orderNumber">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> orderNumber </mat-header-cell>
-    <mat-cell *matCellDef="let row"><a>{{row.orderNumber}}</a>  </mat-cell>
-  </ng-container>
+  <mat-table [dataSource]="dataSource" matSort>
 
-  <ng-container matColumnDef="status">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> status </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
-  </ng-container>
+    <!-- ID Column -->
+    <ng-container matColumnDef="orderNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> orderNumber </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a>{{row.orderNumber}}</a>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="product">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> product </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.product}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="phone">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> phone </mat-header-cell>
-    <mat-cell *matCellDef="let row" (click)="customerDetails()"> {{row.phone}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="grandTotal">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> grandTotal </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.grandTotal}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="orderDate">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> orderDate </mat-header-cell>
-    <mat-cell *matCellDef="let row">{{row.orderDate}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="startDate">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> startDate </mat-header-cell>
-    <mat-cell *matCellDef="let row">{{row.startDate}}</mat-cell>
-  </ng-container>
-  <!-- Name Column -->
-  <ng-container matColumnDef="endDate">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> endDate </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.endDate}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="product">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> product </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.product}} </mat-cell>
+    </ng-container>
 
-  <!-- Name Column -->
-  
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> phone </mat-header-cell>
+      <mat-cell *matCellDef="let row" (click)="customerDetails()"> {{row.phone}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="grandTotal">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> grandTotal </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.grandTotal}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="orderDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> orderDate </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.orderDate | date:'mediumDate'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> startDate </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.startDate | date:'mediumDate'}}</mat-cell>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> endDate </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.endDate | date:'mediumDate'}} </mat-cell>
+    </ng-container>
 
-  <!-- Color Column -->
+    <!-- Name Column -->
 
 
-  <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <button *ngIf="row.status=='Booked'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'delivery'}">Deliver</button>
-      <button *ngIf="row.status=='Delivered'" mat-raised-button color="accent" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'return'}">Return</button>
-      <button *ngIf="row.status=='Returned'" mat-raised-button color="warn" [routerLink]="['/orders/details']" [queryParams]="{ orderNumber: (row.orderNumber)}">Details</button>
-    </mat-cell>
-  </ng-container>
+    <!-- Color Column -->
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;">
-  </mat-row>
-</mat-table>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button *ngIf="row.status=='Booked'" mat-raised-button color="primary" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'delivery'}">Deliver</button>
+        <button *ngIf="row.status=='Delivered'" mat-raised-button color="accent" [routerLink]="['/orders/add']" [queryParams]="{ orderNumber: (row.orderNumber),'action':'return'}">Return</button>
+        <button *ngIf="row.status=='Returned'" mat-raised-button color="warn" [routerLink]="['/orders/details']" [queryParams]="{ orderNumber: (row.orderNumber)}">Details</button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="more">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> More </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)=deleteOrder(row.orderNumber)>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
 </div>

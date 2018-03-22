@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 50px;
+  grid-auto-rows: repeat(3, 1fr);
+  grid-gap: 2rem;
+  margin-top: 100px;
+  grid-template-areas:
+    "title title title"
+    "order order order"
+    "booking delivery return";
+}
+.item0 {
+  grid-area: title;
+  text-align: center;
+}
+.item1 {
+  grid-area: order;
+}
+.item2 {
+  grid-area: booking;
+}
+.item3 {
+  grid-area: delivery;
+}
+.item4 {
+  grid-area: return;
+}
+.order-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}

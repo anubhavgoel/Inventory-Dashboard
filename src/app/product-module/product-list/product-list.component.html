@@ -9,16 +9,18 @@
 
 <div class="example-container mat-elevation-z8">
 
-    <input id="csvfile" type="file" value="i">
-    <button id="submitbutton" type="button" (click)="upload()">Upload CSV file!</button>
-    <button id="submitbutton" type="button" (click)="photo()">fetch</button>
-    <button id="submitbutton" type="button" (click)="add()">Add</button>
+  <input id="csvfile" type="file" value="i">
+  <button id="submitbutton" type="button" (click)="upload()">Upload CSV file!</button>
+  <button id="submitbutton" type="button" (click)="photo()">fetch</button>
+  <button id="submitbutton" type="button" (click)="add()">Add</button>
   <mat-table [dataSource]="dataSource" matSort>
 
     <!-- ID Column -->
     <ng-container matColumnDef="product_code">
       <mat-header-cell *matHeaderCellDef mat-sort-header> product_code </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a [routerLink]="[row.product_code]">{{row.product_code}}</a>  </mat-cell>
+      <mat-cell *matCellDef="let row">
+        <a [routerLink]="[row.product_code]">{{row.product_code}}</a>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="product_name">
@@ -54,7 +56,8 @@
     <!-- Color Column -->
     <ng-container matColumnDef="image">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>
-      <mat-cell *matCellDef="let row"> <img src="{{row.imageUrl}}" alt="" width="20px"> </mat-cell>
+      <mat-cell *matCellDef="let row">
+        <img src="{{row.imageUrl}}" alt="" width="20px"> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="location">
@@ -99,15 +102,15 @@
 
 <div class="grid-container">
   <div class="grid-item">
-    <mat-card [routerLink]="['/products/category/Lajpat Nagar']">Lajpat Nagar</mat-card>
+    <mat-card [routerLink]="['/products/store/LN']">Lajpat Nagar</mat-card>
   </div>
   <div class="grid-item">
-    <mat-card [routerLink]="['/products/category/Patel Nagar']">Patel Nagar</mat-card>
+    <mat-card [routerLink]="['/products/store/PN']">Patel Nagar</mat-card>
   </div>
   <div class="grid-item">
-    <mat-card [routerLink]="['/products/category/Laxmi Nagar']">Laxmi Nagar</mat-card>
+    <mat-card [routerLink]="['/products/store/LX']">Laxmi Nagar</mat-card>
   </div>
   <div class="grid-item">
-    <mat-card [routerLink]="['/products/category/Jaipur']">Jaipur</mat-card>
+    <mat-card [routerLink]="['/products/store/JP']">Jaipur</mat-card>
   </div>
 </div>

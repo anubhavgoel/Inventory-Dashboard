@@ -1,23 +1,68 @@
-<div class="wrapper">
-    <div class="box1">
-      
+<div class="detail-container">
+  <mat-card class="title">
+    <span class="mat-display-2">{{xyz.product_code}}</span>
+    <span class="mat-headline">{{xyz.product_name}}</span>
+  </mat-card>
+  <div class="kpi">
+    <mat-card>
+      <mat-card-title>Booked</mat-card-title>
+      <mat-card-subtitle>4</mat-card-subtitle>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Delivery</mat-card-title>
+      <mat-card-subtitle>4</mat-card-subtitle>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Cancelled</mat-card-title>
+      <mat-card-subtitle>4</mat-card-subtitle>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>ROI</mat-card-title>
+      <mat-card-subtitle>4</mat-card-subtitle>
+    </mat-card>
+  </div>
+  <div class="information">
+    <mat-card>
       <mat-list>
-          <mat-list-item> {{xyz.product_name}} </mat-list-item>
-          <mat-list-item> {{xyz.product_code}} </mat-list-item>
-          <mat-list-item> {{xyz.rent}} </mat-list-item>
-          <mat-list-item> {{xyz.size}} </mat-list-item>
-          <mat-list-item> {{xyz.status}} </mat-list-item>
-          <mat-list-item> {{xyz.category}} </mat-list-item>
-          <mat-list-item> {{xyz.vendor}} </mat-list-item>
-          <mat-list-item> {{xyz.location}} </mat-list-item>
-          <mat-list-item> {{xyz.procurement_cost}} </mat-list-item>
-          <mat-list-item> {{xyz.manfacturing_code}} </mat-list-item>
-          <mat-list-item> {{xyz.color}} </mat-list-item>
-          <mat-list-item> {{xyz.dop}} </mat-list-item>
-         </mat-list>
-    </div>
-    <div class="box2">
-      <img src={{xyz.imageUrl}}>
-    </div>
-    <div class="box3">Three</div>
- </div>
+        <mat-list-item> Product Name : {{xyz.product_name}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Product Code : {{xyz.product_code}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Rent : {{xyz.rent}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Size : {{xyz.size}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Status:{{xyz.status}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Category : {{xyz.category}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Vendor : {{xyz.vendor}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Location : {{xyz.location}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Procurement Cost : {{xyz.procurement_cost}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Manufacturing Code : {{xyz.manfacturing_code}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Color : {{xyz.color}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Date Of Purchase : {{xyz.dop}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Similar Products :
+          <mat-chip-list *ngFor="let item of xyz.similarProducts">
+            <mat-chip>
+              <a [routerLink]="['../item.display']">{{item.display}}</a>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-list-item>
+
+      </mat-list>
+    </mat-card>
+  </div>
+  <div class="image">
+    <mat-card>
+      <img mat-card-image src="{{xyz.imageUrl}}">
+      <mat-card-content>No Image uploaded</mat-card-content>
+    </mat-card>
+  </div>
+</div>
